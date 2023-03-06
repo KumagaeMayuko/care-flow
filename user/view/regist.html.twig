@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="{{constant('user\\model\\Bootstrap::APP_URL')}}css/style.css" rel="stylesheet">
+        <title>会員登録</title>
+    </head>
+    <body>
+        <input type="hidden" name="entry_url" id="entry_url" value="{{constant('user\\model\\Bootstrap::ENTRY_URL')}}">
+        <form method="post" action="confirm.php">
+            <input type="hidden" name="token" value="{{token}}">
+            <table>
+                <tr>
+                    <th>お名前（フルネーム）<span class="red">*</span></th>
+                    <td>
+                        <input type="text" name="name" value="{{dataArr.name}}">
+                        {%if errArr.name | length > 0 %}<br><span class="red">{{errArr.name}}</span>{%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>メールアドレス<span class="red">*</span></th>
+                    <td>
+                        <input type="text" name="email" value="{{dataArr.email}}" id="address" size="40">
+                        {% if errArr. email | length > 0 %}<br><span
+                        class="red">{{errArr.email}}</span>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>パスワード <span class="red">*</span></th>
+                    <td>
+                        <input type="password" name="pass" value="{{dataArr.pass}}">
+                        {%if errArr.pass | length > 0 %}<br><span class="red">{{errArr.pass}}</span>{%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>パスワード（確認用） <span class="red">*</span></th>
+                    <td>
+                        <input type="password" name="pass_confirm" value="{{dataArr.pass}}">
+                        {%if errArr.pass_confirm | length > 0 %}<br><span class="red">{{errArr.pass_confirm}}</span>{%endif%}
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" name="confirm" value="登録確認">
+            </div>
+        </form>
+    </body>
+</html>
