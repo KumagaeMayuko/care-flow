@@ -37,5 +37,5 @@ $context['errArr'] = $errArr;
 $context['token'] = $token;
 $template = $twig->loadTemplate('user/view/regist.html.twig');
 $template->display( $context );
-
+?>
 

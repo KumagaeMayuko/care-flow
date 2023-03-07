@@ -19,8 +19,9 @@ class CSRF
     }
     public function tokenCheck() 
     {
-        if (!isset($_POST["token"]) && $_POST["token"] == $_SESSION['csrf_token']) {
+        if (!isset($_POST["csrf_token"]) && $_POST["csrf_token"] == $_SESSION['csrf_token']) {
             echo "不正なリクエストです";
         }
     }
 }
+?>

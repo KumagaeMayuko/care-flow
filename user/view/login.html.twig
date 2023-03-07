@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ログインページ</title>
+</head>
+<body>
+<h1>ログインページ</h1>
+<div class="message">{{message}}</div>
+<div class="loginform">
+    <form action="login.php" method="post">
+
+        <table>
+            <tr>
+                <th>お名前(フルネーム)</th>
+                <td><input name="name" type="text"></td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td><input name="email" type="text"></td>
+            </tr>
+            <tr>
+                <th>パスワード</th>
+                <td><input name="pass" type="password"></td>
+            </tr>
+        </table>
+        <div>
+            <input name="送信" type="submit">
+        </div>
+    </form>
+</div>
+</body>
+</html>

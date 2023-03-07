@@ -139,7 +139,7 @@ class PDODatabase
 
         // sql文の作成
         // SELECT customer_no FROM session WHERE session_key = ?;    //$other= '';
-        $sql = " SELECT " . $columnKey . " FROM " . $table . $whereSQL . $other;
+        $sql = "SELECT " . $columnKey . " FROM " . $table . " " . $whereSQL . " " . $other;
         return $sql;
     }
 
@@ -170,7 +170,6 @@ class PDODatabase
              . ") ";
         $this->sqlLogInfo($sql, $insDataVal);  // $insDataVal = ['$customer_no, $item_id']
         
-        var_dump($sql);
         $stmt = $this->dbh->prepare($sql); // プリペアドステートメント
         $res = $stmt->execute($insDataVal);
 
