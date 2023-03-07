@@ -67,9 +67,9 @@ switch($mode){
 
     case 'complete': //登録完了
         $dataArr = $_POST;
-        $pass = password_hash($dataArr['pass'], PASSWORD_BCRYPT);
+        $hash = password_hash($dataArr['pass'], PASSWORD_BCRYPT);
         $pass_verify = password_verify($dataArr['pass'], $hash);
-        if ($pass_verify){
+        if (password_verify($dataArr['pass'], $hash)){
             echo'';
         } else {
             echo 'パスワードの暗号化に失敗しました';
@@ -79,6 +79,7 @@ switch($mode){
         // ↓この情報はいらないので外しておく
         unset($dataArr['complete']);
         unset($dataArr['pass_confirm']);
+        unset($dataArr['csrf_token']);
         $res = $common->db->insert("user", $dataArr);
 
         if ($res === true){
@@ -100,4 +101,5 @@ switch($mode){
     $context['errArr'] = $errArr;
     $template = $twig->loadTemplate($template);
     $template->display($context);
+?>
 

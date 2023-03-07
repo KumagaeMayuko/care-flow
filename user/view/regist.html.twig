@@ -8,7 +8,7 @@
     <body>
         <input type="hidden" name="entry_url" id="entry_url" value="{{constant('user\\model\\Bootstrap::ENTRY_URL')}}">
         <form method="post" action="confirm.php">
-            <input type="hidden" name="token" value="{{token}}">
+            <input type="hidden" name="csrf_token" value="{{csrf_token}}">
             <table>
                 <tr>
                     <th>お名前（フルネーム）<span class="red">*</span></th>
