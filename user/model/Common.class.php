@@ -66,6 +66,15 @@ class Common
         }
     }
 
+    public function requestEmailCheck($email)
+    {
+        if ($_POST['email'] === "") {
+            $this->errArr['email'] = "メールアドレスを入力してください";
+        } else if(preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+[a-zA-Z0-9\._-]+$/',$email) === 0){
+            $this->errArr[ 'email' ] = 'メールアドレスを正しい形式で入力してください';
+        }
+    }
+
     public function passCheck()
     {
         if ($this->dataArr['pass'] === "") {

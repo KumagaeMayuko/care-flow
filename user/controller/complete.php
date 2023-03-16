@@ -13,3 +13,4 @@ $twig = new \Twig_Environment( $loader, [
 
 $template = $twig->loadTemplate( 'user/view/complete.html.twig' );
 $template->display( [] );
+?>
