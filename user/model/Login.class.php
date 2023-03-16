@@ -25,7 +25,7 @@ class Login
         session_start();
 
         // ログイン状態の場合ログイン後のページにリダイレクト
-        if (isset($_SESSION["mem_id"])) {
+        if (isset($_SESSION["user_id"])) {
             session_regenerate_id(TRUE);
             header("Location: user/controller/success.php");
             exit();

@@ -29,12 +29,12 @@ foreach ($dataArr as $key => $value){
 }
 
 $csrf->tokenCreate();
-$token = $_SESSION['csrf_token'];
+$csrf_token = $_SESSION['csrf_token'];
 $context = [];
 
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
-$context['token'] = $token;
+$context['csrf_token'] = $csrf_token;
 $template = $twig->loadTemplate('user/view/regist.html.twig');
 $template->display( $context );
 ?>

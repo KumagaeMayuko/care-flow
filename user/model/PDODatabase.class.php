@@ -1,7 +1,6 @@
 <?php
 
 namespace user\model;
-
 class PDODatabase
 {
     public $dbh = null;
@@ -194,14 +193,33 @@ class PDODatabase
              . $preSt  // delete_flg = ?;
              . " WHERE "
              . $where;  // crt_id = ?;
-
         // array_merge():配列を結合する。
         // array_values():全ての値を取り出す 
-        $updateData = array_merge(array_values($insData), $arrWhereVal);
+        $insDataVal = array_values($insData);
+        $insDataVal[] = $arrWhereVal;
+        $updateData = $insDataVal;
+        // $updateData = array_merge(array_values($insData), $arrWhereVal);
         $this->sqlLogInfo($sql, $updateData);
-
         $stmt = $this->dbh->prepare($sql);
         $res = $stmt->execute($updateData);
+        
+        if ($res === false) {
+            $this->catchError($stmt->errorInfo());
+        }
+        return $res;
+    }
+    public function delete($table, $where, $arrWhereVal = [])
+    {
+
+        // sql文の作成
+        $sql = "DELETE FROM "
+             . $table
+             . " WHERE "
+             . $where;  // crt_id = ?;
+
+        $this->sqlLogInfo($sql, $arrWhereVal);
+        $stmt = $this->dbh->prepare($sql);
+        $res = $stmt->execute($arrWhereVal);
 
         if ($res === false) {
             $this->catchError($stmt->errorInfo());
@@ -218,7 +236,7 @@ class PDODatabase
     {
         $errMsg = (!empty($errArr[2]))? $errArr[2]:"";
         // die():文字列を表示させて終了させる
-        die("SQLエラーが発生しました。" . $errArr[2]);
+        die("SQLエラーが発生しました。" . $errMsg);
     }
 
     private function makeLogFile()
