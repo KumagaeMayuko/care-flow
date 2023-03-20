@@ -1,0 +1,9 @@
+{% for value in tree %}
+<ul>
+    <li><a href="list.php?id={{value.id}}">{{value.ctg_name}}</a></li>
+    {% if value.children is defined %}
+        {% include 'user/view/category_list.html.twig' with {'tree': value.children} %}
+    {% endif %}
+</ul>
+{% endfor %}
+
