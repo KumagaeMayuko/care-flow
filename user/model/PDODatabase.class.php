@@ -245,7 +245,7 @@ class PDODatabase
         if (!file_exists($logDir)) {
             mkdir($logDir, 0777);
         }
-        $logPath = $logDir . '/shopping.log';
+        $logPath = $logDir . '/cf.log';
         if (!file_exists($logPath)) {
             touch($logPath);
         }
