@@ -23,13 +23,10 @@ if (!isset($_SESSION["user_id"])) {
 //ログインされている場合は表示用メッセージを編集
 $message = "こんにちは" . $_SESSION['name']."さん";
 $message = htmlspecialchars($message);
-$url = 'staff_top.php';
-$url_message = 'トップページへ';
-$context = [];
 
+$context = [];
 $context['message'] = $message;
-$context['url'] = $url;
-$context['url_message'] = $url_message;
-$template = $twig->loadTemplate('user/view/process_complete.html.twig');
-$template->display( $context );
+
+$template = $twig->loadTemplate('user/view/success.html.twig');
+$template->display($context);
 ?>

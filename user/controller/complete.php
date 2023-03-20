@@ -11,14 +11,6 @@ $twig = new \Twig_Environment( $loader, [
     'cache' => Bootstrap::CACHE_DIR
 ] );
 
-$message = '登録が完了しました';
-$url = 'login.php';
-$url_message = 'ログイン画面へ';
-$context = [];
-
-$context['message'] = $message;
-$context['url'] = $url;
-$context['url_message'] = $url_message;
-$template = $twig->loadTemplate('user/view/process_complete.html.twig');
-$template->display( $context );
+$template = $twig->loadTemplate( 'user/view/complete.html.twig' );
+$template->display( [] );
 ?>
