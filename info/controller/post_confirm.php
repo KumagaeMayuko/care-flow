@@ -37,15 +37,13 @@ if (isset($_POST['complete']) === true){
 //ボタンのモードよって処理をかえる
 switch($mode){
     case 'confirm': //新規登録
-                    //データを受け継ぐ
-                    //↓この情報は入力には必要ない
+
         unset($_POST['confirm']);
         $dataArr = $_POST;
         //エラーメッセージの配列作成
         $errArr = $info->errorCheck($dataArr);
         $err_check = $info->getErrorFlg();
-        // err_check = false→エラーがありますよ！
-        // err_check = true →エラーがないですよ！
+
         if(isset($_FILES['image'])){
             $tmp_image = $_FILES['image'];
         } elseif ($_POST['image_name']) {
@@ -104,6 +102,13 @@ switch($mode){
         unset($dataArr['complete']);
         unset($dataArr['csrf_token']);
         $dataArr['user_id'] = '10'; 
+
+        // tmpファイルからimagesファイルへ画像を移行
+        $tmp_file_path = '../../images/tmp/' . $dataArr['image_name'];
+        $images_file_path = '../../images/' . $dataArr['image_name'];
+        copy( $tmp_file_path , $images_file_path);
+        unlink($tmp_file_path);
+        
         $dataArr['image'] = $dataArr['image_name'];
         unset($dataArr['image_name']);  
         $column = '';

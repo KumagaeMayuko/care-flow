@@ -7,3 +7,5 @@
 [SQL_LOG:2023-03-20 13:29:03]: SELECT id, ctg_name, parent_id FROM category      []
 [SQL_LOG:2023-03-24 07:21:27]: SELECT id, ctg_name, parent_id FROM category      []
 [SQL_LOG:2023-03-25 16:35:15]: SELECT id, ctg_name, parent_id FROM category      []
+[SQL_LOG:2023-03-25 17:14:14]: SELECT id, ctg_name, parent_id FROM category      []
+[SQL_LOG:2023-03-25 17:15:25]: SELECT id, ctg_name, parent_id FROM category      []
