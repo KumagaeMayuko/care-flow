@@ -134,6 +134,15 @@ switch($mode){
         $now = time();
         $dataArr['create_at'] = date("Y/m/d H:i:s", $now);
         $res = $db->insert('info', $dataArr);
+
+        //　info_categoryテーブル作成
+        $info_id = $db->dbh->lastInsertId();
+        $insdata = [
+            'info_id' => $info_id,
+            'ctg_id' => $ctg_id
+        ];
+
+        $info->infoCategoryInsert($insdata);
        
         $template = 'info/view/post_success.html.twig'; 
     }
