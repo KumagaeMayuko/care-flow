@@ -5,7 +5,7 @@ namespace info\model;
 use user\model\PDODatabase;
 use user\model\Bootstrap;
 
-class Info{
+class Info {
     private $dataArr = [];
 
     private $errArr = [];
@@ -106,5 +106,32 @@ class Info{
             }
         }
         return $err_check;
+    }
+
+    public function infoCategoryInsert($insdata){
+       $this->db->insert("info_category", $insdata);
+    }
+
+    public function getLastId(){
+        return $this->dbh->lastInsertId();
+    }
+
+    public function getInfoCategoryData($ctg_id)
+    {
+        $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
+        $column = ' i.id, i.title, i.create_at, user_id';
+        $where = ' ic.ctg_id = ?'; 
+        $arrVal = [$ctg_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+    public function getInfoUserData($info_id)
+    {
+        $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
+        $column = '';
+        $where = ' i.id = ?'; 
+        $arrVal = [$info_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
     }
 }

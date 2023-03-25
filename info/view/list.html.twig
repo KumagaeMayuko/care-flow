@@ -1,0 +1,6 @@
+<h1>一覧画面</h1>
+{% for info in infos %}
+    <p><a href="detail.php?info_id={{info.id}}">{{info.title}}</a></p>
+    <p>{{info.create_at}}</p>
+{% endfor %}
+

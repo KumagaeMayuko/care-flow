@@ -1,0 +1,10 @@
+<h1>詳細画面</h1>
+{% for value in info_detail %}
+    <p>{{value.ctg_name}}</p>
+    <p>{{value.title}}</p>
+    <p>{{value.create_at}}</p>
+    <p>{{value.name}}</p>
+    <p>{{value.content}}</p>
+    <p><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
+{% endfor %}
+<a href="../../user/controller/staff_top.php">トップページへ戻る</a>
