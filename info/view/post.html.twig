@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>新規投稿</title>
+    </head>
+    <body>
+        <h1>新規投稿</h1>
+        <input type="hidden" name="entry_url" id="entry_url" value="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}">
+        <form method="post" action="post_confirm.php" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+            <table>
+                <tr>
+                    <th>タイトル</th>
+                    <td>
+                        <input type="text" name="title" value="{{dataArr.title}}">
+                        {%if errArr.title | length > 0 %}<br><span class="red">{{errArr.title}}</span>{%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>カテゴリー名</th>
+                    <td>
+                        {% include 'common/view/category_list.html.twig' %}
+                        {% if errArr.ctg_name | length > 0 %}<br>{{errArr.ctg_name}}{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>内容</th>
+                    <td>
+                        <textarea name="content" row="4" cols="40">{{dataArr.content}}</textarea>
+                        {%if errArr.content | length > 0 %}<br>{{errArr.content}}</span>{%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>画像</th>
+                    <td>
+                        {% if dataArr.image_name == "" %}
+                            <input type="file" name="image">
+                        {% else %}
+                            変更する場合はファイルを選択してください。
+                            <input type="file" name="image">
+                            <input type="hidden" name="image_name" value={{ dataArr.image_name }}>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>管理者の確認が不要の場合にはチェックしてください</th>
+                    <td>
+                        <input type="checkbox" name="check_flg"
+                            {% if dataArr.check_flg %} checked="checked" {% endif %}>
+                            {%if errArr.check_flg | length > 0 %}<br>{{errArr.check_flg}}</span>{%endif%}
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" name="confirm" value="確認画面">
+            </div>
+        </form>
+    </body>
+</html>
