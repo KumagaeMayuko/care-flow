@@ -20,11 +20,12 @@ $twig = new \Twig_Environment($loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
-$info_id = (isset($_GET['info_id']) === true && preg_match('/^[0-9]+$/', $_GET['info_id']) === 1) ? $_GET['info_id'] : '';
-
-$info_detail = $info->getInfoUserData($info_id);
+session_start();
+$user_id = $_SESSION['user_id'];
+$user_info = $info->getUserInfoData($user_id);
+var_dump($user_info);
 
 $context = [];
-$context['info_detail'] = $info_detail;
-$template = $twig->loadTemplate('info/view/detail.html.twig');
+$context['user_info'] = $user_info;
+$template = $twig->loadTemplate('info/view/edit_list.html.twig');
 $template->display($context);
