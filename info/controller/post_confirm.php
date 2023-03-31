@@ -137,9 +137,9 @@ switch($mode){
 
         unset($dataArr['ctg_name']); 
         if($dataArr['check_flg'] == 'on'){
-            $dataArr['check_flg'] = true;
+            $dataArr['check_flg'] = '1';
         } else {
-           $dataArr['check_flg'] = false; 
+           $dataArr['check_flg'] = '0'; 
         }
         $now = time();
         $dataArr['create_at'] = date("Y/m/d H:i:s", $now);

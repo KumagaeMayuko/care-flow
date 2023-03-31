@@ -1,0 +1,34 @@
+<p>この投稿を本当に削除しますか？</p>
+<table>
+    <tr>
+        <th>カテゴリー：</th>
+        <td>{{info_detail.ctg_name}}</td>
+    </tr>
+    <tr>
+        <th>タイトル：</th>
+        <td>{{info_detail.title}}</td>
+    </tr>
+    <tr> 
+        <th>作成日時：</th>
+        <td>{{info_detail.create_at}}</td>
+    </tr>
+    <tr>
+        <th>作成者：</th>
+        <td>{{info_detail.name}}</td>
+    </tr>
+    <tr>
+        <th>内容：</th>
+        <td>{{info_detail.content}}</td>
+    </tr>
+    <tr>
+        <th>画像：</th>
+        <td><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{info_detail.image}}"/></td>
+    </tr>
+</table>
+<form method="post" action="delete.php">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    <input type="hidden" name="id" value="{{info_detail.id}}">
+    <input type="hidden" name="image" value="{{info_detail.image}}">
+    <button type="submit" name="delete_complete" value="delete_complete">削除</button>
+</form>
+<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>

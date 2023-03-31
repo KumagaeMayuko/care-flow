@@ -125,11 +125,11 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
-    // public function getInfoCategory($info_id)
+    // public function getInfoData($info_id)
     // {
-    //     $table = ' info_category';
+    //     $table = ' info';
     //     $column = ' ';
-    //     $where = ' info_id = ?'; 
+    //     $where = ' id = ?'; 
     //     $arrVal = [$info_id];
 
     //     return  $this->db->select($table, $column, $where, $arrVal);
@@ -167,6 +167,14 @@ class Info {
     {
         $table = ' info_category';
         $where = ' info_id = ? ';
+        $arrWhereVal = [$info_id];
+
+        return $this->db->delete($table, $where, $arrWhereVal);
+    }
+    public function deleteInfoData($info_id)
+    {
+        $table = ' info';
+        $where = ' id = ? ';
         $arrWhereVal = [$info_id];
 
         return $this->db->delete($table, $where, $arrWhereVal);
