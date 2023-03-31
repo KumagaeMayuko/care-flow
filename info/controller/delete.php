@@ -22,26 +22,34 @@ $twig = new \Twig_Environment($loader, [
 
 $context = [];
 
-if(!isset($_POST['delete_complete'])){
-    $info_id = (isset($_GET['id']) === true && preg_match('/^[0-9]+$/', $_GET['id']) === 1) ? $_GET['id'] : '';
-    $info_detail = $info->getInfoUserData($info_id);
-    $context['info_detail'] = $info_detail[0];
-    $template = 'info/view/delete.html.twig';
-
+if (!isset($_POST['delete_complete']) === true) {
+    $mode = 'confirm';
 } else {
-    $dataArr = $_POST;
-    
+    $mode = 'complete';
+}
 
-    // 画像の削除
-    // $file_path = (Bootstrap::IMAGE_URL) . $dataArr['image'];
-    $file_path = '../../images/' . $dataArr['image'];
-    $result = unlink($file_path);
+switch($mode){
+    case 'confirm':
+        $info_id = (isset($_GET['id']) === true && preg_match('/^[0-9]+$/', $_GET['id']) === 1) ? $_GET['id'] : '';
+        $info_detail = $info->getInfoUserData($info_id);
+        $context['info_detail'] = $info_detail[0];
+        $template = 'info/view/delete.html.twig';
+        break;
+    case 'complete':
+        $dataArr = $_POST;
 
-    $res = $info->deleteInfoData($dataArr['id']);
-    $infoCtgRes = $info->deleteInfoCategoryData($dataArr['id']);
-    if($res === true && $infoCtgRes === true){
-        $template = 'info/view/delete_complete.html.twig';
-    } 
+        // 画像の削除
+        // $file_path = (Bootstrap::IMAGE_URL) . $dataArr['image'];
+        if(isset($dataArr['image'])){
+            $file_path = '../../images/' . $dataArr['image'];
+            $result = unlink($file_path);
+        }
+        $res = $info->deleteInfoData($dataArr['id']);
+        $infoCtgRes = $info->deleteInfoCategoryData($dataArr['id']);
+        if($res === true && $infoCtgRes === true){
+            $template = 'info/view/delete_complete.html.twig';
+        } 
+        break;
 }
 
 $template = $twig->loadTemplate($template);
