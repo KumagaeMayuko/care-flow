@@ -178,6 +178,7 @@ class PDODatabase
 
         return $res;
     }
+
     public function update($table, $where, $insData = [], $arrWhereVal = [])
     {
         $arrPreSt = [];
@@ -188,17 +189,15 @@ class PDODatabase
 
         // sql文の作成
         $sql = "UPDATE "
-             . $table
-             . " SET "
-             . $preSt  // delete_flg = ?;
-             . " WHERE "
-             . $where;  // crt_id = ?;
-        // array_merge():配列を結合する。
-        // array_values():全ての値を取り出す 
-        $insDataVal = array_values($insData);
-        $insDataVal[] = $arrWhereVal;
-        $updateData = $insDataVal;
-        // $updateData = array_merge(array_values($insData), $arrWhereVal);
+            . $table
+            . " SET "
+            . $preSt  // title = ? ...;
+            . " WHERE "
+            . $where;  // id = ?;
+
+
+        $updateData = array_merge(array_values($insData), $arrWhereVal);
+
         $this->sqlLogInfo($sql, $updateData);
         $stmt = $this->dbh->prepare($sql);
         $res = $stmt->execute($updateData);
@@ -208,6 +207,7 @@ class PDODatabase
         }
         return $res;
     }
+
     public function delete($table, $where, $arrWhereVal = [])
     {
 
@@ -215,7 +215,7 @@ class PDODatabase
         $sql = "DELETE FROM "
              . $table
              . " WHERE "
-             . $where;  // crt_id = ?;
+             . $where;  // id = ?;
 
         $this->sqlLogInfo($sql, $arrWhereVal);
         $stmt = $this->dbh->prepare($sql);

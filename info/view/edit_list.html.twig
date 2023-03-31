@@ -1,0 +1,6 @@
+<h1>編集画面</h1>
+{% for value in user_info %}
+    <p>{{value.name}}さんが作成した投稿記事を編集できます。</p>
+    <p><a href="edit_detail.php?info_id={{value.id}}">{{value.title}}</a></p>
+    <p>{{value.create_at}}</p>
+{% endfor %}

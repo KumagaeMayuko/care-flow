@@ -2,8 +2,8 @@
 
 namespace info\model;
 
-use user\model\PDODatabase;
-use user\model\Bootstrap;
+use common\model\PDODatabase;
+use common\model\Bootstrap;
 
 class Info {
     private $dataArr = [];
@@ -125,13 +125,50 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+    // public function getInfoCategory($info_id)
+    // {
+    //     $table = ' info_category';
+    //     $column = ' ';
+    //     $where = ' info_id = ?'; 
+    //     $arrVal = [$info_id];
+
+    //     return  $this->db->select($table, $column, $where, $arrVal);
+    // }
     public function getInfoUserData($info_id)
     {
         $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
-        $column = '';
+        $column = 'i.*, u.name';
         $where = ' i.id = ?'; 
         $arrVal = [$info_id];
 
         return  $this->db->select($table, $column, $where, $arrVal);
+    }
+    public function getUserInfoData($user_id)
+    {
+        $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
+        $column = 'i.*, u.name';
+        $where = ' i.user_id = ?'; 
+        $arrVal = [$user_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+
+    public function updateInfoData($info_id, $dataArr)
+    {
+        $table = ' info';
+        $insData = $dataArr;
+        $where = ' id = ? ';
+        $arrWhereVal = [$info_id];
+
+        return $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+
+    public function deleteInfoCategoryData($info_id)
+    {
+        $table = ' info_category';
+        $where = ' info_id = ? ';
+        $arrWhereVal = [$info_id];
+
+        return $this->db->delete($table, $where, $arrWhereVal);
     }
 }

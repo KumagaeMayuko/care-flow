@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>新規投稿登録確認</title>
+        <title>確認画面</title>
     </head>
     <body>
         <form method="post" action="post_confirm.php">
@@ -55,6 +55,9 @@
                 {% endfor %}
                 {% if image_name is defined %}
                     <input type="hidden" name="image_name" value="{{image_name}}">
+                {% endif %}
+                {% if edit_confirm is defined %}
+                    <input type="hidden" name="id" value="{{dataArr.id}}">
                 {% endif %}
             </div>
         </form> 
