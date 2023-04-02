@@ -22,6 +22,14 @@ $twig = new \Twig_Environment($loader, [
 
 $info_id = (isset($_GET['info_id']) === true && preg_match('/^[0-9]+$/', $_GET['info_id']) === 1) ? $_GET['info_id'] : '';
 
+session_start();
+
+$user_id = $_SESSION['user_id'];
+
+// ユーザーが詳細画面へ遷移した際にread_statusテーブルを作成し、既読したことにする
+// （read_statusテーブルにデータがなければ、作成）
+$res = $info->createReadStatusDataNotExists($info_id, $user_id);
+
 $info_detail = $info->getInfoUserData($info_id);
 
 $context = [];

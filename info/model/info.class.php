@@ -116,6 +116,15 @@ class Info {
         return $this->dbh->lastInsertId();
     }
 
+    public function insertReadStatusData($info_id, $user_id){
+        $table = ' read_status';
+        $insData = [
+            'info_id' => $info_id,
+            'user_id' => $user_id
+        ];
+        return $this->db->insert($table, $insData);
+    }
+
     public function getInfoCategoryData($ctg_id)
     {
         $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
@@ -135,6 +144,7 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+
     public function searchInfoData($search)
     {
         $search = "%" . $search . "%";
@@ -145,6 +155,7 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+
     public function getInfoUserData($info_id)
     {
         $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
@@ -154,12 +165,22 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+
     public function getUserInfoData($user_id)
     {
         $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
         $column = 'i.*, u.name';
         $where = ' i.user_id = ?'; 
         $arrVal = [$user_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+    public function getReadStatusData($info_id, $user_id)
+    {
+        $table = ' read_status';
+        $column = ' *';
+        $where = ' info_id = ? AND user_id = ?'; 
+        $arrVal = [$info_id, $user_id];
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
@@ -182,6 +203,7 @@ class Info {
 
         return $this->db->delete($table, $where, $arrWhereVal);
     }
+
     public function deleteInfoData($info_id)
     {
         $table = ' info';
@@ -189,6 +211,16 @@ class Info {
         $arrWhereVal = [$info_id];
 
         return $this->db->delete($table, $where, $arrWhereVal);
+    }
+
+        // 既読チェック：初回のみ、詳細画面へ遷移した場合にread_statusテーブルを作成
+    public function createReadStatusDataNotExists($info_id, $user_id)
+    {
+        $readStatusRes = $this->getReadStatusData($info_id, $user_id);
+        if (empty($readStatusRes)){
+            $res = $this->insertReadStatusData($info_id, $user_id);
+        }
+        return $res;
     }
 
 }
