@@ -125,6 +125,16 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+
+    public function getCategoryDataByInfoID($info_id)
+    {
+        $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
+        $column = ' i.id, i.title, i.create_at, user_id';
+        $where = ' ic.ctg_id = ?'; 
+        $arrVal = [$info_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
     public function searchInfoData($search)
     {
         $search = "%" . $search . "%";

@@ -23,7 +23,6 @@ unset($_GET['send']);
 $res = $info->searchInfoData($search);
 
 $context = [];
-$context['res'] = '';
 
 $data = [];
 $data = $res;
@@ -40,12 +39,15 @@ $count = count($data);
 
             $context['tree'] = $tree;
 
-            $template = $twig->loadTemplate('user/view/staff_top.html.twig');
-            $template->display($context);
+            $template = 'user/view/staff_top.html.twig';
 
         } else if ($count === 1){
-            header('Location:' . Bootstrap::ENTRY_URL .  'info/controller/detail.php?info_id=' . $data[0]['id']);
-        } else if($res === false){
+            header('Location:' . Bootstrap::ENTRY_URL .  'info/controller/detail.php?info_id=' . $data[0]['id']  );
+        } else if ($count >= 2){    
+            $context['infos'] = $data;
+            $template = 'info/view/list.html.twig';
+
+        }else if($res === false){
             echo  'エラーが出ています'; 
 
             $cateArr = $ctg->getCategories();
@@ -54,9 +56,8 @@ $count = count($data);
             $context['cateArr'] = $cateArr;
 
             $context['tree'] = $tree;
-            $template = $twig->loadTemplate('user/view/staff_top.html.twig');
-            $template->display($context);
+            $template = 'user/view/staff_top.html.twig';
         }
 
-$template = $twig->loadTemplate('info/view/search.html.twig');
+$template = $twig->loadTemplate($template);
 $template->display( $context );
