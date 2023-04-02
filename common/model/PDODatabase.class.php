@@ -259,5 +259,4 @@ class PDODatabase
         $logData = sprintf("[SQL_LOG:%s]: %s [%s]\n", date('Y-m-d H:i:s'), $str, implode(",", $arrVal)); 
         error_log($logData, 3, $logPath);
     }
-
 }
