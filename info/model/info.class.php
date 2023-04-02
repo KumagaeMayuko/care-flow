@@ -125,15 +125,16 @@ class Info {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
-    // public function getInfoData($info_id)
-    // {
-    //     $table = ' info';
-    //     $column = ' ';
-    //     $where = ' id = ?'; 
-    //     $arrVal = [$info_id];
+    public function searchInfoData($search)
+    {
+        $search = "%" . $search . "%";
+        $table = ' info';
+        $column = ' *';
+        $where = ' title like ? OR content like ?'; 
+        $arrVal = [$search,$search];
 
-    //     return  $this->db->select($table, $column, $where, $arrVal);
-    // }
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
     public function getInfoUserData($info_id)
     {
         $table = ' info i LEFT JOIN user u ON i.user_id = u.id';
@@ -179,4 +180,5 @@ class Info {
 
         return $this->db->delete($table, $where, $arrWhereVal);
     }
+
 }
