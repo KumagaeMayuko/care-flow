@@ -9,6 +9,7 @@ use user\model\Bootstrap;
 class Login 
 {
     public $message = '';
+    public $manager_message = '';
     public $res = [];
     public $db = null;
     public $dbh = null;
@@ -50,6 +51,7 @@ class Login
                 $arrVal = [$_POST['email']];
                 $res = $this->db->select($table, $col, $where, $arrVal);
 
+                var_dump($res);
                 //検索したユーザー名に対してパスワードが正しいかを検証
                 //正しくないとき
 
@@ -61,16 +63,20 @@ class Login
                     session_regenerate_id(TRUE); //セッションidを再発行
                     $_SESSION["user_id"] = $res[0]['id']; //セッションにログイン情報を登録
                     $_SESSION["name"] = $res[0]['name']; //セッションにログイン情報を登録
-                    header("Location: success.php"); //ログイン後のページにリダイレクト
-                    exit();
+                    $_SESSION["manager_flg"] = $res[0]['manager_flg']; //セッションにログイン情報を登録
+                    header("Location: success.php");
                 }
             }
         }
-
+        
         $this->message = $message;
-        // $hash = password_hash('testuser', PASSWORD_DEFAULT);
-        // var_dump($hash);
+
+    }
+    public function managerCheck()
+    {
+        if($_SESSION["manager_flg"] === "1"){
+            $manager_message = '管理者の方はこちら';
+        }
+        $this->manager_message = $manager_message;
     }
 }
-
-?>

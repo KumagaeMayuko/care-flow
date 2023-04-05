@@ -13,14 +13,15 @@ $twig = new \Twig_Environment( $loader, [
     'cache' => Bootstrap::CACHE_DIR
 ] );
 
-$login = new Login();
-$login->checkSession();
 
 $csrf = new CSRF();
 $csrf->tokenCreate();
 $csrf->tokenCheck();
 session_destroy();
 $csrf_token = $_SESSION['csrf_token'];
+
+$login = new Login();
+$login->checkSession();
 $message = $login->message;
 
 $context = [];
