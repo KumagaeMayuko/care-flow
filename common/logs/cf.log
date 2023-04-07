@@ -1239,3 +1239,5 @@
 [SQL_LOG:2023-04-07 16:03:09]: UPDATE  user SET email=? WHERE  id = ? [mayukokumagae315@gmail.com,10]
 [SQL_LOG:2023-04-07 16:03:20]: SELECT id, ctg_name, parent_id FROM category      []
 [SQL_LOG:2023-04-07 16:03:21]: SELECT * FROM  user  WHERE  id = ?     [10]
+[SQL_LOG:2023-04-07 16:10:04]: SELECT id, ctg_name, parent_id FROM category      []
+[SQL_LOG:2023-04-07 16:10:09]: SELECT id, ctg_name, parent_id FROM category      []
