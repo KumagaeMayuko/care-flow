@@ -487,3 +487,4 @@
 [SQL_LOG:2023-04-07 14:35:10]: SELECT * FROM user  WHERE email = ?     [mayukokumagae315@gmail.com]
 [SQL_LOG:2023-04-07 14:38:27]: SELECT * FROM user  WHERE email = ?     [mayukokumagae315@gmail.com]
 [SQL_LOG:2023-04-07 14:38:54]: SELECT * FROM user  WHERE email = ?     [mayukokumagae315@gmail.com]
+[SQL_LOG:2023-04-07 14:55:09]: SELECT id, ctg_name, parent_id FROM category      []

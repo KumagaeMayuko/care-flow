@@ -21,10 +21,21 @@ Class manager {
     }
 
     // Userテーブルから全ての会員情報を取得
-    public function getUserData()
+    public function getUsersData()
     {
         $table = ' user';
         return  $this->db->select($table);
+    }
+
+    // Userテーブルからuser_idを指定して全ての会員情報を取得
+    public function getUserData($user_id)
+    {
+        $table = ' user';
+        $colomn = '';
+        $where = ' id = ?';
+        $arrVal = [$user_id];
+
+        return  $this->db->select($table, $colomn, $where, $arrVal);
     }
 
     // userテーブルから送信したuser_idの情報を更新（delete_flgを1に変更）
@@ -36,11 +47,31 @@ Class manager {
 
         return  $this->db->update($table, $where, $insData, $arrWhereVal);
     }
+    // userテーブルの名前を更新
+        public function updateUserName($user_id, $dataArr)
+    {
+        $table = ' user';
+        $where = ' id = ?'; 
+        $insData = ['name' => $dataArr];
+        $arrWhereVal = [$user_id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+    // userテーブルのメアドを更新
+        public function updateUserEmail($user_id, $dataArr)
+    {
+        $table = ' user';
+        $where = ' id = ?'; 
+        $insData = ['email' => $dataArr];
+        $arrWhereVal = [$user_id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
 
     // 取得した配列を分解し変数に文字を代入
     public function characterAssignment()
     {
-        $users_data = $this->getUserData();
+        $users_data = $this->getUsersData();
         foreach($users_data as $value){
             $value['manager_message'] = '';
             $value['message'] = '';
@@ -121,4 +152,5 @@ Class manager {
         $this->template = $template;
         return $res;
     }
+
 }
