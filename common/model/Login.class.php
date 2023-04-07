@@ -9,6 +9,7 @@ use common\model\Bootstrap;
 class Login 
 {
     public $message = '';
+    public $manager_message = '';
     public $res = [];
     public $db = null;
     public $dbh = null;
@@ -25,9 +26,9 @@ class Login
         session_start();
 
         // ログイン状態の場合ログイン後のページにリダイレクト
-        if (isset($_SESSION["user_id"]) ) {
+        if (isset($_SESSION["user_id"])) {
             session_regenerate_id(TRUE);
-            header("Location: success.php");
+            header("Location: user/controller/success.php");
             exit();
         }
 
@@ -50,6 +51,7 @@ class Login
                 $arrVal = [$_POST['email']];
                 $res = $this->db->select($table, $col, $where, $arrVal);
 
+                var_dump($res);
                 //検索したユーザー名に対してパスワードが正しいかを検証
                 //正しくないとき
 
@@ -62,19 +64,19 @@ class Login
                     $_SESSION["user_id"] = $res[0]['id']; //セッションにログイン情報を登録
                     $_SESSION["name"] = $res[0]['name']; //セッションにログイン情報を登録
                     $_SESSION["manager_flg"] = $res[0]['manager_flg']; //セッションにログイン情報を登録
-                    // 管理者か確認→管理者だった場合は管理者画面へ遷移
-                    if($_SESSION["manager_flg"] === "1"){
-                        header("Location: success.php");
-                    } else {
-                        $message = '管理者ではないのでログインできません。';
-                    }
-                    exit();
+                    header("Location: success.php");
                 }
             }
         }
-
+        
         $this->message = $message;
+
+    }
+    public function managerCheck()
+    {
+        if($_SESSION["manager_flg"] === "1"){
+            $manager_message = '管理者の方はこちら';
+        }
+        $this->manager_message = $manager_message;
     }
 }
-
-?>
