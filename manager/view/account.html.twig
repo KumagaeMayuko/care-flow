@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>アカウント情報</title>
+</head>
+<body>
+    <div class="header">
+        <h1><span>アカウント</span></h1>
+    </div>
+    <div id="account_info">
+        <form action="account.php" method="post">
+            <table>
+                <tr>
+                    <th>名前</th>
+                    <td>{{userData.name}}</td>
+                </tr>
+                <tr>
+                    <th>名前の変更</th>
+                    <td>
+                        <input type="text" name="name" value="{{userData.name}}">
+                        {% if userData.manager_flg == '1'%}
+                            （管理者）
+                        {% endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>メールアドレス</th>
+                    <td>{{userData.email}}</td>
+                </tr>
+                <tr>
+                    <th>メールアドレスの変更</th>
+                    <td>
+                        <input type="email" name="email" value="{{userData.email}}">
+                    </td>
+                    <td>
+                        <input type="submit" value="変更">
+                    </td>
+                </tr>
+                <tr>
+                    <th>登録日時</th>
+                    <td>{{userData.regist_at}}</td>
+                </tr>
+            </table>
+        </form>
+        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
+    </div>
+</body>
+</html>
