@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>会員一覧</title>
+</head>
+<body>
+    <div class="header">
+        <h1><span>会員一覧</span></h1>
+    </div>
+    <div id="user_list">
+        <form method="post" action="user_list.php" >
+            {% for user in users%}
+                <table>
+                    <tr>
+                        <th>名前</th>
+                        <td>{{user.name}} {{user.manager_message}} {{user.message}}</td>
+                    </tr>
+                    <tr>
+                        <th>メールアドレス</th>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>登録日時</th>
+                        <td>{{user.regist_at}}</td>
+                    </tr>
+                    {% if user.delete_flg == '0' %}
+                        <tr>
+                            <button type="submit" name="delete_user_id" value="{{user.id}}">削除する</button>
+                        </tr>
+                    {% endif %}
+                    {% if user.delete_flg == '1' %}
+                        <tr>
+                            <button type="submit" name="non_delete_user_id" value="{{user.id}}">削除取消</button>
+                        </tr>
+                    {% endif %}
+                    {% if user.manager_flg == '0' %}
+                        <tr>
+                            <button type="submit" name="non_manager_user_id" value="{{user.id}}">管理者へ設定</button>
+                        </tr>
+                    {% endif %}
+                    {% if user.manager_flg == '1' %}
+                        <tr>
+                            <button type="submit" name="manager_user_id" value="{{user.id}}">管理者解除</button>
+                        </tr>
+                    {% endif %}
+                </table>
+                <br><br>
+            {% endfor %}
+        </form>
+        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
+    </div>
+</body>
+</html>

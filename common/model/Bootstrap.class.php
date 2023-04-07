@@ -23,7 +23,8 @@ class Bootstrap
     const APP_URL = 'http://localhost:8888/CF/';
 
     const ENTRY_URL = self::APP_URL;
-    const TOP_URL = self::ENTRY_URL . 'user/controller/staff_top.php';
+    const TOP_URL = self::ENTRY_URL . 'user/controller/top.php';
+    const MANAGER_TOP_URL = self::ENTRY_URL . 'manager/controller/top.php';
     const IMAGE_URL = self::ENTRY_URL . 'images/';
 
     public static function loadClass($class)

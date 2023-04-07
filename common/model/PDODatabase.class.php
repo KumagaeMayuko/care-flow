@@ -76,6 +76,7 @@ class PDODatabase
         return $data;
     }
 
+
     public function count($table, $where = '', $arrVal = [])
     {
         $sql = $this->getSql('count', $table, $where);
@@ -194,7 +195,6 @@ class PDODatabase
             . $preSt  // title = ? ...;
             . " WHERE "
             . $where;  // id = ?;
-
 
         $updateData = array_merge(array_values($insData), $arrWhereVal);
 
