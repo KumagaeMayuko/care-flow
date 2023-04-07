@@ -41,7 +41,7 @@ class Login
         //ユーザー名またはパスワードが送信されて来なかった場合
             if(empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["pass"])) {
                 $message = "ユーザー名とメールアドレスとパスワードを入力してください";
-            }
+            } 
             //ユーザー名とパスワードが送信されて来た場合
             else {
                 //post送信されてきたemailがデータベースにあるか検索
@@ -51,7 +51,6 @@ class Login
                 $arrVal = [$_POST['email']];
                 $res = $this->db->select($table, $col, $where, $arrVal);
 
-                var_dump($res);
                 //検索したユーザー名に対してパスワードが正しいかを検証
                 //正しくないとき
 
@@ -62,9 +61,14 @@ class Login
                 else {
                     session_regenerate_id(TRUE); //セッションidを再発行
                     $_SESSION["user_id"] = $res[0]['id']; //セッションにログイン情報を登録
-                    $_SESSION["name"] = $res[0]['name']; //セッションにログイン情報を登録
-                    $_SESSION["manager_flg"] = $res[0]['manager_flg']; //セッションにログイン情報を登録
-                    header("Location: success.php");
+                    $_SESSION["name"] = $res[0]['name']; 
+                    $_SESSION["manager_flg"] = $res[0]['manager_flg']; 
+                    $_SESSION["delete_flg"] = $res[0]['delete_flg']; 
+                    if($_SESSION['delete_flg'] === '0'){ // 削除済みの会員はログイン不可
+                        header("Location: success.php");
+                    } else {
+                        $message= 'このアカウントは削除されています';
+                    }
                 }
             }
         }

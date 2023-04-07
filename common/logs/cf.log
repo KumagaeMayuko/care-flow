@@ -1109,3 +1109,4 @@
 [SQL_LOG:2023-04-07 14:22:58]: SELECT * FROM  user      []
 [SQL_LOG:2023-04-07 14:22:58]: SELECT * FROM  user      []
 [SQL_LOG:2023-04-07 14:23:23]: SELECT id, ctg_name, parent_id FROM category      []
+[SQL_LOG:2023-04-07 14:38:59]: SELECT id, ctg_name, parent_id FROM category      []
