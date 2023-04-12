@@ -27,6 +27,13 @@ Class manager {
         return  $this->db->select($table);
     }
 
+    // infoテーブルから全ての情報を取得
+    public function getInfosData()
+    {
+        $table = 'info';
+        return  $this->db->select($table);
+    }
+
     // Userテーブルからuser_idを指定して全ての会員情報を取得
     public function getUserData($user_id)
     {
@@ -153,4 +160,35 @@ Class manager {
         return $res;
     }
 
+    // read_statusテーブルから全てのデータを取得
+    public function getReadStatusData()
+    {
+        $table = 'read_status';
+        $column = '*';
+        $where = ''; 
+        $arrVal = [];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+
+    // userテーブルにread_statusテーブルをjoin
+        public function getUserReadStatusData()
+    {
+        $table = 'user u LEFT JOIN read_status rs ON u.id = rs.user_id LEFT JOIN info i ON rs.info_id = i.id';
+        $column = 'u.name, u.id AS user_id, rs.id AS read_status_id, i.title, i.id AS info_id';
+        $where = '';
+        $arrVal = [];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+    // userテーブルにread_statusテーブルをjoin(user_idで取得)
+        public function getUserReadStatusDataByUserId($user_id)
+    {
+        $table = 'user u LEFT JOIN read_status rs ON u.id = rs.user_id LEFT JOIN info i ON rs.info_id = i.id';
+        $column = 'u.name, u.id AS user_id, rs.id AS read_status_id, i.title, i.id AS info_id';
+        $where = 'u.id = ?';
+        $arrVal = [$user_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
 }
