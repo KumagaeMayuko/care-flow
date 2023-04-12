@@ -8,11 +8,14 @@
         <h1><span>スタッフ未読確認一覧</span></h1>
     </div>
     <div id="resd_check">
-        {% for user in userData%}
+        {% for key, value in readedByUser%}
             <table>
                 <tr>
                     <th>名前：</th>
-                    <th><a href="read_check_detail.php?user_id={{user.id}}">{{user.name}}</a></th>
+                    <th><a href="read_check_detail.php?user_id={{value.user_id}}">{{key}}</a></th>
+                    {% if value.unreaded is not empty %}
+                        <th>未読あり！</th>
+                    {% endif %}
                 </tr> 
             </table>
             <br>
