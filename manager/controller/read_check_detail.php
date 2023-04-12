@@ -19,17 +19,14 @@ $info = new info;
 
 $user_id = $_GET['user_id'];
 
-$infos = $manager->getInfosData();
+// 未読のタイトルを全て取得
+$unreadInfos = $manager->getUnReadInfos($user_id);
+
+// nameを取得
 $readStatusByUserId = $manager->getUserReadStatusDataByUserId($user_id);
 
 $context = [];
-
-// 全てのinfo_idから既読したinfo_id,titleを取得
-$alreadyReadInfos = array_column($readStatusByUserId, 'title', 'info_id'); // 配列から'id''title'キーの値を取り出して新しい配列を作成
-$infoAll = array_column($infos, 'title', 'id');
-$unreadInfos = array_diff($infoAll, $alreadyReadInfos); // $infoAllから$alreadyReadInfoIdを取り除いた配列を作る
 $context['unreadInfos'] = $unreadInfos;
-
 
 $name = $readStatusByUserId[0]['name'];
 $context['name'] = $name;

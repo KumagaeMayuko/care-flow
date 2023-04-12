@@ -18,11 +18,37 @@ $manager = new manager;
 $info = new info;
 
 $userData = $manager->getUsersData();
-
+$infos = $manager->getInfosData();
 $context = [];
+// var_dump($userData);
+$readStatusUsers = $manager->getUserReadStatusData();
+$alreadyReadInfos = array_column($readStatusUsers, 'read_status_id', 'user_id');
+// $userData['read_status_id'] = $alreadyReadInfos;
+// var_dump($readStatusUsers);
+// var_dump($readStatusUsers);
 
-$context['userData'] = $userData;
+function groupBy($array, $key1, $key2) {
+    // var_dump($array[0][$key2]);
+    $result = [];
+    foreach($array as $val) {
+        if(!isset($result[$val[$key1]])) {
+            $result[$val[$key1]] = [];
+            $result[$val[$key1]][$key2] = $val[$key2];
+        }
+        $result[$val[$key1]]['readed'][] = $val['info_id'];
+    }
+    return $result;
+}
 
+$infoAll = array_column($infos,'id');
+$readedByUser = groupBy($readStatusUsers, 'name', 'user_id');
+foreach($readedByUser as &$value){
+    $readed = $value['readed'];
+    $unreadInfos = array_diff($infoAll, $readed);
+    $value['unreaded'] = $unreadInfos;
+}
+
+$context['readedByUser'] = $readedByUser;
 
 $template = $twig->loadTemplate('manager/view/read_check_list.html.twig');
 $template->display( $context );

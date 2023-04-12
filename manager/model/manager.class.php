@@ -191,4 +191,14 @@ Class manager {
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
+
+    // 未読のinfo_id,titleを取得
+    public function getUnReadInfos($user_id){
+        $infos = $this->getInfosData();
+        $readStatusByUserId = $this->getUserReadStatusDataByUserId($user_id);
+        $alreadyReadInfos = array_column($readStatusByUserId, 'title', 'info_id'); // 配列から'id''title'キーの値を取り出して新しい配列を作成
+        $infoAll = array_column($infos, 'title', 'id');
+        $unreadInfos = array_diff($infoAll, $alreadyReadInfos); // $infoAllから$alreadyReadInfoIdを取り除いた配列を作る
+        return $unreadInfos;
+    }
 }

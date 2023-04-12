@@ -1,7 +1,12 @@
 <h1>{{name}}さん：未読記事一覧</h1>
 
-{% for key, value in unreadInfos %}
-タイトル：{{value}}<br>
-{% endfor %}
+{% if unreadInfos is empty %}
+    <p>全て既読済みです</p>
+{% else %}
+    {% for key, value in unreadInfos %}
+        タイトル：{{value}}<br>
+    {% endfor %}
+{% endif %}
 
-        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">トップページへ</a>
+
+<a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">トップページへ</a>
