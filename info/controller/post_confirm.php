@@ -8,6 +8,7 @@ use common\model\Bootstrap;
 use common\model\PDODatabase;
 use common\model\Category;
 use info\model\Info;
+use common\model\Login;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ctg = new Category($db);
@@ -19,6 +20,7 @@ $twig = new \Twig_Environment( $loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
+$login = new Login;
 $context= [];
 
 //モード判定（どの画面から来たかの判断）
@@ -31,7 +33,7 @@ if (isset($_POST['back']) === true){
     $mode = 'back';
 }
 // 登録完了
-if (isset($_POST['complete']) === true){
+if (isset($_POST['complete']) === true || isset($_POST['manager_edit_confirm']) === true){
     $mode = 'complete';
 }
 //ボタンのモードよって処理をかえる
@@ -163,7 +165,31 @@ switch($mode){
                 'ctg_id' => $ctg_id
             ];
             $info->infoCategoryInsert($insdata);
+            $template = 'info/view/post_success.html.twig'; 
+            // 管理者が確認し投稿する場合
+        } else if(isset($_POST['manager_edit_confirm'])){
+            unset($dataArr['manager_edit_confirm']);
+            unset($dataArr['create_at']);
+            $dataArr['update_at'] = date("Y/m/d H:i:s", $now);
+            $insDataArr = [];
+            $insDataArr = $dataArr; 
+            $insDataArr['check_flg'] = '0';
+            unset($insDataArr['id']); 
+            $res = $info->updateInfoData($dataArr['id'], $insDataArr);
 
+            // info_categoryテーブルの既にあるレコードの削除
+            $deleteRes = $info->deleteInfoCategoryData($dataArr['id']);
+
+            // 新たにinfo_categoryテーブルのレコード作成
+            $insdata = [
+                'info_id' => $dataArr['id'],
+                'ctg_id' => $ctg_id
+            ];
+            $info->infoCategoryInsert($insdata); 
+            $login->managerCheck();
+            $context['message'] = $login->manager_message;
+
+            $template = 'manager/view/manager_post_success.html.twig';
         } else {
             session_start();
             $dataArr['user_id'] = $_SESSION['user_id'];
@@ -178,9 +204,9 @@ switch($mode){
                 'ctg_id' => $ctg_id
             ];
             $info->infoCategoryInsert($insdata);
+            $template = 'info/view/post_success.html.twig'; 
         }
 
-        $template = 'info/view/post_success.html.twig'; 
     }
 
     $context['dataArr'] = $dataArr;

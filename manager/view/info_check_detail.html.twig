@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>投稿確認詳細画面</title>
+</head>
+<body>
+    <div id="wrapper">
+        <h1><span>投稿確認詳細一覧</span></h1>
+    </div>
+    <div id="post_check">
+        <form action='manager_edit.php' method='post'>
+            <table>
+                <tr>
+                    <th>作成日時：</th>
+                    <th>{{post.create_at}}</th>
+                </tr> 
+                <tr>
+                    <th>タイトル：</th>
+                    <th>{{post.title}}</th>
+                </tr> 
+                <tr>
+                    <th>内容：</th>
+                    <th>{{post.content}}</th>
+                </tr> 
+                <tr>
+                    <th>画像：</th>
+                    <th><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{post.image}}"/></th>
+                </tr> 
+            </table>
+            <input type="submit" name="manager_edit" value="編集">
+            <input type="hidden" name="info_id" value="{{post.id}}">
+        </form>
+    </div>
+        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">トップページへ戻る</a><br>
+        <a href="info_check_list.php">一覧画面へ戻る</a>
+</body>
+</html>

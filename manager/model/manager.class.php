@@ -33,6 +33,16 @@ Class manager {
         $table = 'info';
         return  $this->db->select($table);
     }
+    // infoテーブルからcheck_flgが１の情報を取得
+    public function getInfosDataByCheckFlg($check_flg)
+    {
+        $table = 'info';
+        $colomn = '';
+        $where = 'check_flg = ?';
+        $arrVal = [$check_flg];
+
+        return  $this->db->select($table, $colomn, $where, $arrVal);
+    }
 
     // Userテーブルからuser_idを指定して全ての会員情報を取得
     public function getUserData($user_id)

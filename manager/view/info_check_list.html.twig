@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>投稿確認一覧画面</title>
+</head>
+<body>
+    <div id="wrapper">
+        <h1><span>投稿確認確認一覧</span></h1>
+    </div>
+    <div id="post_check">
+        {% if checkPosts is not empty %}
+            {% for post in checkPosts%}
+                <table>
+                    <tr>
+                        <th>タイトル：</th>
+                        <th><a href="info_check_detail.php?info_id={{post.id}}">{{post.title}}</a></th>
+                    </tr> 
+                    <tr>
+                        <th>作成日時：</th>
+                        <th>{{post.create_at}}</th>
+                    </tr> 
+                </table>
+                <br>
+            {% endfor %}
+        {% else %}
+            <p>確認依頼はありません</p> 
+        {% endif %}
+    </div>
+        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
+</body>
+</html>
