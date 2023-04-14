@@ -128,9 +128,18 @@ class Info {
     public function getInfoCategoryData($ctg_id)
     {
         $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
-        $column = ' i.id, i.title, i.create_at, user_id';
+        $column = ' i.id, i.title, i.create_at, i.check_flg, user_id';
         $where = ' ic.ctg_id = ?'; 
         $arrVal = [$ctg_id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+    public function getInfoCategoryDataByCheckFlg($ctg_id, $check_flg)
+    {
+        $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
+        $column = ' i.id, i.title, i.create_at, i.check_flg, user_id';
+        $where = ' ic.ctg_id = ? AND i.check_flg = ?'; 
+        $arrVal = [$ctg_id, $check_flg];
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
