@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>問題と答えのフォーム</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/test_create.js"></script>
+</head>
+<body>
+    {{message}}
+    <form action="test_create.php" method="post">
+        <div class="input_fields_wrap">
+            <button class="add_field_button">＋</button>
+            <div>
+                <table>
+                    <th>テストタイトル：（例）防護服の取り扱い<input type="text" name="title" size="30"></th>
+                    <tr>
+                        <th>問題番号:1 問題:<textarea name="question_1" rows="5" cols="33"></textarea></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            問題1に対する答えの番号（1:⚪︎ 2:×）：<input type="number" name="answer_no_1" min="1" max="2">
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <input type="submit" value="作成">
+    </form>
+</body>
+</html>

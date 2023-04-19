@@ -270,4 +270,31 @@ Class manager {
 
         return $this->db->update($table, $where, $insData, $arrWhereVal);
     }
+
+        // testテーブルにタイトルを追加
+    public function insertTestData($title){
+        $table = 'test';
+        $now = time();
+        $created_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'title' => $title,
+            'created_at' => $created_at
+        ];
+        $res = $this->db->insert($table, $insData);
+        return $this->db->getLastId();
+    }
+        // questionテーブルにタイトルを追加
+    public function insertQuestionData($test_id, $question, $answer_no){
+        $table = 'question';
+        $now = time();
+        $created_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'test_id' => $test_id,
+            'question' => $question,
+            'answer_no' => $answer_no,
+            'created_at' => $created_at
+        ];
+        return $this->db->insert($table, $insData);
+    }
+
 }
