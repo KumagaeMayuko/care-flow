@@ -19,7 +19,9 @@ class Category
     {
         $table = 'category';
         $col = 'id, ctg_name, parent_id';
-        $res = $this->db->select($table, $col);
+        $where = 'delete_flg = ?';
+        $arrVal = ['0'];
+        $res = $this->db->select($table, $col, $where, $arrVal);
         return $res;
     }
     // カテゴリーのツリー構造を再帰関数で取得
