@@ -2839,3 +2839,6 @@
 [SQL_LOG:2023-04-19 18:24:50]:  INSERT INTO question (test_id,question,answer_no,created_at) VALUES (?,?,?,?)  [6,あああああ,1,2023/04/19 18:24:50]
 [SQL_LOG:2023-04-19 18:25:28]:  INSERT INTO test (title,created_at) VALUES (?,?)  [ああああ,2023/04/19 18:25:28]
 [SQL_LOG:2023-04-19 18:25:28]:  INSERT INTO question (test_id,question,answer_no,created_at) VALUES (?,?,?,?)  [7,あああああ,2,2023/04/19 18:25:28]
+[SQL_LOG:2023-04-19 18:59:05]:  INSERT INTO test (title,created_at) VALUES (?,?)  [aaa,2023/04/19 18:59:05]
+[SQL_LOG:2023-04-19 18:59:05]:  INSERT INTO question (test_id,question,answer_no,created_at) VALUES (?,?,?,?)  [8,aaa,1,2023/04/19 18:59:05]
+[SQL_LOG:2023-04-19 19:00:01]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
