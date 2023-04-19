@@ -211,4 +211,63 @@ Class manager {
         $unreadInfos = array_diff($infoAll, $alreadyReadInfos); // $infoAllから$alreadyReadInfoIdを取り除いた配列を作る
         return $unreadInfos;
     }
+
+    // categoryテーブルにカテゴリーを追加
+    public function insertCategoryData($ctg_name, $parent_id){
+        $table = 'category';
+        $now = time();
+        $create_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'ctg_name' => $ctg_name,
+            'parent_id' => $parent_id,
+            'create_at' => $create_at
+        ];
+        return $this->db->insert($table, $insData);
+    }
+    
+    // categoryテーブルの親要素を指定した子カテゴリーの取得
+    public function getCategoryByParentId($id)
+    {
+        $table = 'category';
+        $column = '';
+        $where = 'parent_id = ?';
+        $arrVal = [$id];
+
+        return  $this->db->select($table, $column, $where, $arrVal);
+    }
+
+    // categoryテーブルを更新(where = id)
+        public function updateCategoryDataByDeleteFlg($id)
+    {
+        $table = 'category';
+        $now = time();
+        $update_at = date("Y/m/d H:i:s", $now);
+        $delete_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'update_at' => $update_at,
+            'delete_at' => $delete_at,
+            'delete_flg' => 1
+        ];
+        $where = 'id = ? ';
+        $arrWhereVal = [$id];
+
+        return $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+    // categoryテーブルを更新(where = parent_id)
+        public function updateCategoryDataByParentId($parent_id)
+    {
+        $table = 'category';
+        $now = time();
+        $update_at = date("Y/m/d H:i:s", $now);
+        $delete_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'update_at' => $update_at,
+            'delete_at' => $delete_at,
+            'delete_flg' => 1
+        ];
+        $where = 'parent_id = ?';
+        $arrWhereVal = [$parent_id];
+
+        return $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
 }

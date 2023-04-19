@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/common.js"></script>
     <title>トップページ（管理者用）</title>
 </head>
 <body>
@@ -19,8 +20,15 @@
     <div id="info_share">
         <p>情報共有ページのカテゴリー</p>
         <div id="category">
-        {% include 'user/view/category_list.html.twig' %}
+        {% include 'manager/view/category_list.html.twig' %}
         </div>
+        <button class='category_create_btn' type="button">＋(メインカテゴリーの追加)</button>
+        <span class="ctg">
+            <form id="form_0" action="../../manager/controller/top.php" method="post">
+                <input class='category_input' type='text' name='ctg_name'>
+                <button type='submit' for="form_0">送信</button>
+            </form>
+        </span>
         <div id="post">
             <a href="../../info/controller/post.php"><input type="button" name="post" value="新規投稿" id="post" /></a>
         </div>

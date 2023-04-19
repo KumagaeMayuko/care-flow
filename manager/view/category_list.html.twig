@@ -1,0 +1,32 @@
+<style type="text/css">
+    .category_input {
+        margin-left: 40px;
+    }
+    .ctg {
+        display: none;
+    }
+</style>
+
+{% for value in tree %}
+<ul>
+    <li>
+        <a href="../../info/controller/list.php?id={{value.id}}">{{value.ctg_name}}</a>
+        <button class='category_create_btn' type="button">＋</button>
+        <span class="ctg">
+            <form id="form_{{value.id}}" action="../../manager/controller/top.php" method="post">
+                <input class='category_input' type='text' name='ctg_name'>
+                <input value="{{value.id}}" type='hidden' name='parent_id'>
+                <button type='submit' for="form_{{value.id}}">送信</button>
+            </form>
+        </span>
+        <form action="../../manager/controller/top.php" method="post">
+            <input type="hidden" name="id" value="{{value.id}}">
+            <button type="submit">カテゴリーを削除</button>
+        </form>    
+    </li>
+    {% if value.children is defined %}
+        {% include 'manager/view/category_list.html.twig' with {'tree': value.children} %}
+    {% endif %}
+</ul>
+{% endfor %}
+
