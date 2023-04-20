@@ -297,4 +297,12 @@ Class manager {
         return $this->db->insert($table, $insData);
     }
 
+        // testテーブルの取得
+    public function getTestData()
+    {
+        $table = 'test';
+        $column = '';
+
+        return  $this->db->select($table, $column);
+    }
 }
