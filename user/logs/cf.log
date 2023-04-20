@@ -559,3 +559,4 @@
 [SQL_LOG:2023-04-20 13:56:20]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
 [SQL_LOG:2023-04-20 13:56:20]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
 [SQL_LOG:2023-04-20 13:58:49]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
+[SQL_LOG:2023-04-20 14:09:06]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]

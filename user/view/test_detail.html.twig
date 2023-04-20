@@ -1,0 +1,12 @@
+<h1>スキルチェックテスト</h1>
+<h2>タイトル：{{test.title}}</h2>
+<form action="test_detail.php" method="post">
+    {% for question in questions %}
+        <p>問題：{{question.id}}</p>
+        <p>{{question.question}}</p>
+        <label><input type="radio" name="{{question.id}}" value="1">正しい</label>
+        <label><input type="radio" name="{{question.id}}" value="2">誤り</label>
+    {% endfor %}
+    <br>
+    <input type="submit" name="submit">
+</form>
