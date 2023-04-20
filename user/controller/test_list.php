@@ -1,6 +1,6 @@
 <?php
 
-namespace manager\controller;
+namespace user\controller;
 require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
@@ -25,5 +25,5 @@ $context = [];
 
 $context['tests'] = $test;
 
-$template = $twig->loadTemplate('manager/view/test_list.html.twig');
+$template = $twig->loadTemplate('user/view/test_list.html.twig');
 $template->display( $context );
