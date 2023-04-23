@@ -36,11 +36,17 @@ if(!empty($_POST)){
         $question_id = $key;
         $choice_no = $value;
         // user_answerテーブルにuserの回答をinsert
-        $res = $user->insertUserAnswer($user_id, $question_id, $choice_no, $created_at);
+        // $res = $user->insertUserAnswer($user_id, $question_id, $choice_no, $created_at);
     }
-    $user_answer = $user->getUserAnswerDataByUserId($user_id, $created_at);
-    $context['user_answer'] = $user_answer;
-    $context['questions'] = $question;
+    $user_answer =  array_values($_POST);
+    $question_ids =  array_keys($_POST);
+    $questions = $user->getUQuestionDataByQuestionId($question_ids);
+    $questions = array_map(function($a, $b) {
+        $a['user_answer'] = $b;
+        return $a;
+    }, $questions, $user_answer);
+
+    $context['questions'] = $questions;
     $template = 'user/view/test_answer.html.twig';
     unset($_POST);
 } else {

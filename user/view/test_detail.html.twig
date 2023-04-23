@@ -1,8 +1,8 @@
 <h1>スキルチェックテスト</h1>
 <h2>タイトル：{{test.title}}</h2>
 <form action="test_detail.php" method="post">
-    {% for question in questions %}
-        <p>問題：{{question.id}}</p>
+    {% for key, question in questions %}
+        <p>問題：{{key+1}}</p>
         <p>{{question.question}}</p>
         <label><input type="radio" name="{{question.id}}" value="1">正しい</label>
         <label><input type="radio" name="{{question.id}}" value="2">誤り</label>
@@ -10,3 +10,4 @@
     <br>
     <input type="submit" name="submit">
 </form>
+<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
