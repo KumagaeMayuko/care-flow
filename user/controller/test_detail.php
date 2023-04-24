@@ -36,7 +36,7 @@ if(!empty($_POST)){
         $question_id = $key;
         $choice_no = $value;
         // user_answerテーブルにuserの回答をinsert
-        // $res = $user->insertUserAnswer($user_id, $question_id, $choice_no, $created_at);
+        $res = $user->insertUserAnswer($user_id, $question_id, $choice_no, $created_at);
     }
     $user_answer =  array_values($_POST);
     $question_ids =  array_keys($_POST);

@@ -1,0 +1,39 @@
+<h1>{{user_name}}さんの過去の点数一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+        <th>タイトル</th>
+        <th>回答日時</th>
+        <th>点数</th>
+    </tr>
+  </thead>
+  <tbody>
+        {% for key, value in uniqueBytitle %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>
+            {% for v in value %}
+                {{ v.ua_created_at|date('Y/m/d H:i:s') }}<br>
+            {% endfor %}
+            </td>
+            <td>
+            {% for v in value %}
+                {{ v.matched_count }}/{{v.record_count}}<br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% for v in test %}
+        <tr>
+            <td>{{ v.title }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
+
