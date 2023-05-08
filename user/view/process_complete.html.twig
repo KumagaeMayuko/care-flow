@@ -1,8 +1,10 @@
-<html>
-<body>
+
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}{% endblock %}
+{% block content %}
     <p>{{message}}</p>
     {% if url is defined %}
         <a href="{{url}}">{{url_message}}</a>
-    {% endif %}
-</body>
-</html>
+    {% endif %} 
+{% endblock %}

@@ -1,8 +1,13 @@
-<h1>一覧画面</h1>
-{% for info in infos %}
-    <p><a href="detail.php?info_id={{info.id}}">{{info.title}}</a></p>
-    <p>{{info.create_at}}</p>
-{% endfor %}
-    <p>{{message}}</p>
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}一覧画面{% endblock %}
+{% block content %}
+    <h2 class='h2'>一覧画面</h2>
+    {% for info in infos %}
+        <p><a href="detail.php?info_id={{info.id}}">{{info.title}}</a></p>
+        <p>{{info.create_at}}</p>
+    {% endfor %}
+        <p>{{message}}</p>
+    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+{% endblock %}
 

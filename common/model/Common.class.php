@@ -72,5 +72,15 @@ class Common
         }
         return $err_check;
     }
+
+    // contextに渡す共通の変数を返す
+    public function getContext()
+    {
+        session_start();
+        $context = [];
+        $context['manager_flg'] = $_SESSION['manager_flg'];
+        $context['username'] = $_SESSION['name'];
+        return $context;
+    }
 }
 ?>

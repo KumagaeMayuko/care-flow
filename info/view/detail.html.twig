@@ -1,16 +1,21 @@
-<h1>詳細画面</h1>
-{% for value in info_detail %}
-    <p>{{value.ctg_name}}</p>
-    <p>{{value.title}}</p>
-    <p>{{value.create_at}}</p>
-    <p>{{value.name}}</p>
-    <p>{{value.content}}</p>
-    <p><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
-    <div id="edit">
-        <a href="../../info/controller/edit_detail.php?id={{value.id}}"><input type="button" name="edit" value="編集" id="edit" /></a>
-    </div>
-    <div id="delete">
-        <a href="../../info/controller/delete.php?id={{value.id}}"><input type="button" name="delete" value="削除" id="delete" /></a>
-    </div>
-{% endfor %}
-<a href="../../user/controller/staff_top.php">トップページへ戻る</a>
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}詳細画面{% endblock %}
+{% block content %}
+    <h2 class='h2'>詳細画面</h2>
+    {% for value in info_detail %}
+        <p>{{value.ctg_name}}</p>
+        <p>タイトル：{{value.title}}</p>
+        <p>作成日時：{{value.create_at}}</p>
+        <p>作成者：{{value.name}}</p>
+        <p>内容：{{value.content}}</p>
+        <p><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
+        <div id="edit">
+            <a href="../../info/controller/edit_detail.php?id={{value.id}}"><input type="button" name="edit" value="編集" id="edit" /></a>
+        </div>
+        <div id="delete">
+            <a href="../../info/controller/delete.php?id={{value.id}}"><input type="button" name="delete" value="削除" id="delete" /></a>
+        </div>
+    {% endfor %}
+    <a href="../../user/controller/staff_top.php">トップページへ戻る</a>
+{% endblock %}

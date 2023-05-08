@@ -1,26 +1,31 @@
-<h1>回答</h1>
-<table>
-  {% set total_score = 0 %}
-  <tr>
-    <th></th>
-    <th>問題文</th>
-    <th>正しい回答</th>
-    <th>あなたの回答</th>
-  </tr>
-  {% for key, question in questions %}
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}回答{% endblock %}
+{% block content %}
+    <h2 class='h2'>回答</h2>
+    <table>
+    {% set total_score = 0 %}
     <tr>
-      <td>問：{{ key + 1 }}</td>
-      <td>{{ question.question }}</td>
-      <td>{{ question.answer_no }}</td>
-      <td>{{ question.user_answer }}</td>
+        <th></th>
+        <th>問題文</th>
+        <th>正しい回答</th>
+        <th>あなたの回答</th>
     </tr>
-    {% if question.answer_no == question.user_answer %}
-      {% set total_score = total_score + 1 %}
-    {% endif %}
-  {% endfor %}
-</table>
-<br>
-{% set count = questions|length %}
-合計：{{ total_score }}/{{ count }}点
-<br><br>
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
+    {% for key, question in questions %}
+        <tr>
+        <td>問：{{ key + 1 }}</td>
+        <td>{{ question.question }}</td>
+        <td>{{ question.answer_no }}</td>
+        <td>{{ question.user_answer }}</td>
+        </tr>
+        {% if question.answer_no == question.user_answer %}
+        {% set total_score = total_score + 1 %}
+        {% endif %}
+    {% endfor %}
+    </table>
+    <br>
+    {% set count = questions|length %}
+    合計：{{ total_score }}/{{ count }}点
+    <br><br>
+    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
+{% endblock %}

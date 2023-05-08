@@ -1,2 +1,7 @@
-<p>投稿完了しました</p>
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップ画面へ戻る</a>
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}投稿完了{% endblock %}
+{% block content %}
+    <p>投稿完了しました</p>
+    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップ画面へ戻る</a>
+{% endblock %}

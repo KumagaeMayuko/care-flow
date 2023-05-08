@@ -7,6 +7,7 @@ use common\model\Bootstrap;
 use common\model\PDODatabase;
 use common\model\CSRF;
 use common\model\Category;
+use common\model\Common;
 
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
@@ -16,6 +17,7 @@ $twig   = new \Twig_Environment( $loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $csrf = new CSRF();
 $ctg = new Category($db);
+$common = new Common();
 
 // 初期データを設定
 $dataArr = [ 
@@ -36,10 +38,8 @@ $cateArr = $ctg->getCategories();
 $tree = $ctg->buildTree($cateArr);
 
 $csrf->tokenCreate();
-
-// session_start();
+$context = $common->getContext();
 $csrf_token = $_SESSION['csrf_token'];
-$context = [];
 
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;

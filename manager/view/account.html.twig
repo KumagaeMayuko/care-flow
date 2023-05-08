@@ -1,12 +1,8 @@
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>アカウント情報</title>
-</head>
-<body>
-    <div class="header">
-        <h1><span>アカウント</span></h1>
-    </div>
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}TOPページ（管理者）{% endblock %}
+{% block content %}
+    <h2 class="h2">アカウント</h2>
     <div id="account_info">
         <form action="account.php" method="post">
             <table>
@@ -44,5 +40,4 @@
         </form>
         <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
     </div>
-</body>
-</html>
+{% endblock %}
