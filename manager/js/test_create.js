@@ -21,6 +21,9 @@ $(document).ready(function () {
         }
     });
     $(wrapper).on("click", ".remove_field", function (e) { // 追加したフィールドを削除する
-        e.preventDefault(); $(this).parent('div').remove(); x--;
+        e.preventDefault(); 
+        $(this).parent('div').remove();
+        x--;
     })
 });
+

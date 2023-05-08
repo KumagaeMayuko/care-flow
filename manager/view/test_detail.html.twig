@@ -12,7 +12,8 @@
         {% endfor %}
         <br>
         <input type="submit" name="test_edit" value="編集">
-        <input type="hidden" name="test_id" value="{{id}}">
+        <input type="submit" name="test_delete" value="削除">
+        <input type="hidden" name="test_id" value="{{test.id}}">
     </form>
     <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">管理者トップ画面へ戻る</a>   
 {% endblock %}

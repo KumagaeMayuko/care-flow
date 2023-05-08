@@ -228,7 +228,7 @@ Class Manager {
         $res = $this->db->insert($table, $insData);
         return $this->db->getLastId();
     }
-        // questionテーブルにタイトルを追加
+        // questionテーブルに問題を追加
     public function insertQuestionData($test_id, $question, $answer_no){
         $table = 'question';
         $now = time();
@@ -249,5 +249,40 @@ Class Manager {
         $column = '';
 
         return  $this->db->select($table, $column);
+    }
+
+    // testテーブルのタイトルを更新
+    public function updateTestTitle($id, $title)
+    {
+        $table = 'test';
+        $where = 'id = ?'; 
+        $now = time();
+        $updated_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'title' => $title,
+            'updated_at' => $updated_at
+        ];
+        $arrWhereVal = [$id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+
+    // questionテーブルから送信したtest_idの情報を更新（問題文、答え）
+    public function updateQuestionDataByQuestionId($question_id, $question, $answer_no, $delete_flg)
+    {
+        $table = 'question';
+        $where = 'id = ?'; 
+        $now = time();
+        $updated_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'question' => $question,
+            'answer_no' => $answer_no,
+            'delete_flg' => $delete_flg,
+            'updated_at' => $updated_at,
+            'deleted_at' => $updated_at
+        ];
+        $arrWhereVal = [$question_id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
     }
 }
