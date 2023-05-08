@@ -1,6 +1,11 @@
-{% include 'common/view/test_title_list.html.twig' %}
+{% extends 'manager/view/base.html.twig' %}
 
-<div id="test_create">
-    <a href="test_create.php"><input type="button" name="create_test" value="テスト新規作成" id="create_test" /></a>
-</div>
-<a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">トップページへ戻る</a>
+{% block title %}テスト一覧{% endblock %}
+{% block content %}
+    <h2 class="h2">テスト一覧</h2>
+    {% include 'common/view/test_title_list.html.twig' %}
+    <div id="test_create">
+        <a href="test_create.php"><input type="button" name="create_test" value="テスト新規作成" id="create_test" /></a>
+    </div>
+    <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">管理者トップ画面へ戻る</a>   
+{% endblock %}

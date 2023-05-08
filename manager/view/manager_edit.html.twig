@@ -1,11 +1,9 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>編集画面（管理者用）</title>
-    </head>
-    <body>
-        <h1>管理者用編集</h1>
-        {{info_user.name}}さんからの確認依頼です
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}編集画面（管理者用）{% endblock %}
+{% block content %}
+    <h2 class="h2">管理者用編集</h2>
+    {{info_user.name}}さんからの確認依頼です
         <input type="hidden" name="entry_url" id="entry_url" value="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}">
         <form method="post" action="../../info/controller/post_confirm.php" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{csrf_token}}">
@@ -40,5 +38,4 @@
             </div>
             <input type="hidden" name="id" value="{{info_user.id}}">
         </form>
-    </body>
-</html>
+{% endblock %}

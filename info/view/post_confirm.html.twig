@@ -1,65 +1,62 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>確認画面</title>
-    </head>
-    <body>
-        <form method="post" action="post_confirm.php">
-            <table>
-                <tr>
-                    <th>タイトル</th>
-                    <td>{{dataArr.title}}</td>
-                </tr>
-                <tr>
-                    <th>カテゴリー名</th>
-                    <td>{{dataArr.ctg_name}}</td>
-                </tr>
-                <tr>
-                    <th>内容</th>
-                    <td>{{dataArr.content|nl2br}}</td>
-                </tr>
-                <tr>
-                    <th>画像</th>
-                    <td>
-                        {% if dataArr.image_name is defined %}
-                            あり<br>
-                        {% else %}
-                            なし<br>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>管理者確認</th>
-                    <td>
-                        {% if dataArr.check_flg == 'on' %}
-                            不要<br>
-                        {% else %}
-                            必要<br>
-                        {% endif %}
-                    </td>
-                </tr>
-            </table>
-            <div>
-                <input type="submit" name="back" value="戻る">
-                <input type="submit" name="complete" value="投稿完了">
-                {% for key,value in dataArr %}
-                    <!-- ↓下記メソッドで配列か否かをチェックしている -->
-                    {% if value is iterable%}
-                        {% for v in value %}
-                            <input type="hidden" name="{{key}}[]" value="{{v}}">
-                        {% endfor%}
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}確認画面{% endblock %}
+{% block content %}
+    <h2 class='h2'>確認画面</h2>
+    <form method="post" action="post_confirm.php">
+        <table>
+            <tr>
+                <th>タイトル</th>
+                <td>{{dataArr.title}}</td>
+            </tr>
+            <tr>
+                <th>カテゴリー名</th>
+                <td>{{dataArr.ctg_name}}</td>
+            </tr>
+            <tr>
+                <th>内容</th>
+                <td>{{dataArr.content|nl2br}}</td>
+            </tr>
+            <tr>
+                <th>画像</th>
+                <td>
+                    {% if dataArr.image_name is defined %}
+                        あり<br>
                     {% else %}
-                        <input type="hidden" name="{{key}}" value="{{value}}">
+                        なし<br>
                     {% endif %}
-                {% endfor %}
-                {% if image_name is defined %}
-                    <input type="hidden" name="image_name" value="{{image_name}}">
+                </td>
+            </tr>
+            <tr>
+                <th>管理者確認</th>
+                <td>
+                    {% if dataArr.check_flg == 'on' %}
+                        不要<br>
+                    {% else %}
+                        必要<br>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <div>
+            <input type="submit" name="back" value="戻る">
+            <input type="submit" name="complete" value="投稿完了">
+            {% for key,value in dataArr %}
+                <!-- ↓下記メソッドで配列か否かをチェックしている -->
+                {% if value is iterable%}
+                    {% for v in value %}
+                        <input type="hidden" name="{{key}}[]" value="{{v}}">
+                    {% endfor%}
+                {% else %}
+                    <input type="hidden" name="{{key}}" value="{{value}}">
                 {% endif %}
-                {% if edit_confirm is defined %}
-                    <input type="hidden" name="id" value="{{dataArr.id}}">
-                {% endif %}
-            </div>
-        </form> 
-    </body>
-</html>
+            {% endfor %}
+            {% if image_name is defined %}
+                <input type="hidden" name="image_name" value="{{image_name}}">
+            {% endif %}
+            {% if edit_confirm is defined %}
+                <input type="hidden" name="id" value="{{dataArr.id}}">
+            {% endif %}
+        </div>
+    </form> 
+{% endblock %}

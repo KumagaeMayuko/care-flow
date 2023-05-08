@@ -1,24 +1,9 @@
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/common.js"></script>
-    <title>トップページ（管理者用）</title>
-</head>
-<body>
-    <div id="wrapper">
-        <div class="header">
-            <h1><span>-CareFlow-(管理者用)</span></h1>
-            <p>{{message}}</p>
-            <a href="{{'../../user/controller/logout.php'}}">ログアウト</a><br>
-            <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">ユーザー画面</a>
-        </div>
-        <div class="side">
-            <p>MENU</p>
-            {% include 'manager/view/menu.html.twig' %}
-        </div>
-    </div>
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}TOPページ（管理者）{% endblock %}
+{% block content %}
+    <h2 class="h2">医療情報ノート</h2>
     <div id="info_share">
-        <p>情報共有ページのカテゴリー</p>
         <div id="category">
         {% include 'manager/view/category_list.html.twig' %}
         </div>
@@ -33,5 +18,4 @@
             <a href="../../info/controller/post.php"><input type="button" name="post" value="新規投稿" id="post" /></a>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

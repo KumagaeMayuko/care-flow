@@ -1,5 +1,9 @@
-{% include 'common/view/test_title_list.html.twig' %}
+{% extends 'user/view/base.html.twig' %}
 
-
-<a href='post_score.php'>過去のテスト点数</a><br>
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
+{% block title %}テスト一覧{% endblock %}
+{% block content %}
+    <h2 class='h2'>テスト一覧</h2>
+    {% include 'common/view/test_title_list.html.twig' %}
+    <a href='post_score.php'>過去のテスト点数</a><br>
+    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップページへ戻る</a>
+{% endblock %}

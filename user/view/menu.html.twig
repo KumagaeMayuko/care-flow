@@ -1,13 +1,50 @@
 <div id="menu">
-    <ul>
-        <li><a href="../../manager/controller/top.php">{{manager_message}}</a></li>
-        <li><a href="controller/user.php">アカウント</a></li>
-        <li><a href="controller/staff_top.php">情報共有画面</a></li>
-        <li><a href="controller/summary.php">サマリー</a></li>
-        <li><a href="test_list.php">技術スキルチェック</a></li>
-        <form method="get" action="../../info/controller/search.php">
-            検索<input type="text" name="search">
-            <input name="send" type="submit" value="検索">
-        </form>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            {% if manager_flg == '1' %}
+                <a class="nav-link active" aria-current="page" href="../../manager/controller/top.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-home">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="ml-2">管理者の方はこちら</span>
+                </a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="controller/user.php">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-home">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="ml-2">アカウント</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="top.php">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-home">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="ml-2">情報共有画面</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="test_list.php">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-home">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="ml-2">技術スキルチェック</span>
+            </a>
+        </li> 
     </ul>
 </div>

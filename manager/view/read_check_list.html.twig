@@ -1,26 +1,27 @@
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>未読確認一覧画面</title>
-</head>
-<body>
-    <div id="wrapper">
-        <h1><span>スタッフ未読確認一覧</span></h1>
-    </div>
-    <div id="resd_check">
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}スタッフ未読確認一覧{% endblock %}
+{% block content %}
+    <h2 class="h2">スタッフ未読確認一覧</h2>
+    <div id="read_check">
         {% for key, value in readedByUser%}
             <table>
                 <tr>
                     <th>名前：</th>
-                    <th><a href="read_check_detail.php?user_id={{value.user_id}}">{{key}}</a></th>
-                    {% if value.unreaded is not empty %}
-                        <th>未読あり！</th>
-                    {% endif %}
+                    <th>
+                        <a href="read_check_detail.php?user_id={{value.user_id}}">{{key}}</a>
+                        {% if value.unreaded is not empty %}
+                            <span class="hover-message">
+                                <i class="fas fa-exclamation-circle" style="color: #e65f33;">
+                                    <span class="word">未読の記事が{{ value.unreaded|length }}件あります</span>
+                                </i>
+                            </span>
+                        {% endif %}
+                    </th>
                 </tr> 
             </table>
             <br>
         {% endfor %}
     </div>
         <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
-</body>
-</html>
+{% endblock %}

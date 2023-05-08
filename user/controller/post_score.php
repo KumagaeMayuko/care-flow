@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use user\model\User;
 
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
@@ -13,8 +14,10 @@ $twig = new \Twig_Environment( $loader, [
 ] );
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $user = new User;
-session_start();
-$user_name = $_SESSION['name'];
+$common = new Common;
+
+$context = $common->getContext();
+
 $user_id = $_SESSION['user_id'];
 
 // testのタイトルを一覧画面で表示するためにデータを取得
@@ -62,12 +65,7 @@ foreach ($allData as $data) {
     $uniqueBytitle[$title][] = $data;
 }
 
-
-$context = [];
-
 $context['uniqueBytitle'] = $uniqueBytitle;
 $context['test'] = $test;
-$context['user_name'] = $user_name;
-
 $template = $twig->loadTemplate('user/view/post_score.html.twig');
 $template->display( $context );

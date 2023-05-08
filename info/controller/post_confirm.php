@@ -7,12 +7,14 @@ require_once dirname(__FILE__,3 ) . '/common/model/Bootstrap.class.php';
 use common\model\Bootstrap;
 use common\model\PDODatabase;
 use common\model\Category;
+use common\model\Common;
 use info\model\Info;
 use common\model\Login;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ctg = new Category($db);
 $info = new Info();
+$common = new Common();
 
 //テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR) ;
@@ -21,7 +23,7 @@ $twig = new \Twig_Environment( $loader, [
 ]);
 
 $login = new Login;
-$context= [];
+$context = $common->getContext();
 
 //モード判定（どの画面から来たかの判断）
 //登録画面から来た場合
@@ -97,7 +99,6 @@ switch($mode){
             $errArr[$key] = '';
         }
 
-        session_start();
         $cateArr = $ctg->getCategories();
         $tree = $ctg->buildTree($cateArr);
 
@@ -186,12 +187,9 @@ switch($mode){
                 'ctg_id' => $ctg_id
             ];
             $info->infoCategoryInsert($insdata); 
-            $login->managerCheck();
-            $context['message'] = $login->manager_message;
 
             $template = 'manager/view/manager_post_success.html.twig';
         } else {
-            session_start();
             $dataArr['user_id'] = $_SESSION['user_id'];
             $res = $db->insert('info', $dataArr); 
 

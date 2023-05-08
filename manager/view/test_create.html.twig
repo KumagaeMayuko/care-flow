@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>問題と答えのフォーム</title>
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}問題作成{% endblock %}
+{% block content %}
+    <h2 class="h2">問題作成</h2>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/test_create.js"></script>
-</head>
-<body>
+    <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/test_create.js"></script>
     {{message}}
     <form action="test_create.php" method="post">
         <div class="input_fields_wrap">
@@ -26,5 +25,5 @@
         </div>
         <input type="submit" value="作成">
     </form>
-</body>
-</html>
+    <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">管理者トップ画面へ戻る</a>   
+{% endblock %}
