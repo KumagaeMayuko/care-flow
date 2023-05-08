@@ -195,7 +195,7 @@ class PDODatabase
             . $preSt  // title = ? ...;
             . " WHERE "
             . $where;  // id = ?;
-
+            
         $updateData = array_merge(array_values($insData), $arrWhereVal);
 
         $this->sqlLogInfo($sql, $updateData);

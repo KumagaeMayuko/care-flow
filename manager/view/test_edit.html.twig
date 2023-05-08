@@ -1,0 +1,52 @@
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}問題編集画面{% endblock %}
+{% block content %}
+    <h2 class="h2">問題編集</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{constant('common\\model\\Bootstrap::APP_URL')}}manager/js/test_create.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('.remove').click(function(e) {
+            e.preventDefault(); // リンクのデフォルトの動作を無効化
+            $(this).closest('div.each_question').css({'display':'none'}); // 親要素のeach_questionを削除
+            $(this).closest('div.each_question').find('input[type=hidden]').val('1');
+        });
+    });
+    </script>
+    {{message}}
+    <form action="test_edit.php" method="post">
+        <div class="input_fields_wrap">
+            <button class="add_field_button">＋</button>
+            <p>テストタイトル：（例）防護服の取り扱い
+                <input type="text" name="title" size="30" value="{{test.title}}">
+            </p>
+            {% for question in questions %}
+                <div class="each_question">
+                    <tr>
+                        <td>
+                        問題:
+                        <textarea name="question_id_{{question.id}}" rows="5" cols="33">{{question.question}}</textarea>
+                        <input type='hidden' name='remove_flg_question_id_{{question.id}}' value='0'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        答えの番号（1:⚪︎ 2:×）：
+                        <input type="number" name="answer_no_id_{{question.id}}" min="1" max="2" value="{{question.answer_no}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <a href="#" class="remove">削除</a>
+                        </td>
+                    </tr>
+                </div>
+            {% endfor %}
+
+        </div>
+        <input type="submit" name="test_edit_complete" value="作成">
+        <input type="hidden" name="test_id" value="{{test.id}}">
+    </form>
+{% endblock %}
