@@ -721,3 +721,6 @@
 [SQL_LOG:2023-05-08 13:30:33]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
 [SQL_LOG:2023-05-08 13:49:25]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
 [SQL_LOG:2023-05-08 19:02:09]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
+[SQL_LOG:2023-05-09 03:37:37]: SELECT * FROM user  WHERE email = ?     [mayukokumagae315@gmail.com]
+[SQL_LOG:2023-05-09 04:38:58]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
+[SQL_LOG:2023-05-09 04:39:23]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]

@@ -33,6 +33,7 @@ if(!empty($_POST) && isset($_POST['title'])){
     }
     unset($_POST);
     header("Location: test_success.php");
+
     exit();
 } elseif (!empty($_POST)){
     $message = 'タイトルを入力してください';

@@ -247,8 +247,10 @@ Class Manager {
     {
         $table = 'test';
         $column = '';
+        $where = 'delete_flg = ?';
+        $arrVal = ['0'];
 
-        return  $this->db->select($table, $column);
+        return  $this->db->select($table, $column, $where, $arrVal);
     }
 
     // testテーブルのタイトルを更新
@@ -266,9 +268,41 @@ Class Manager {
 
         return  $this->db->update($table, $where, $insData, $arrWhereVal);
     }
+    // testテーブルのdelete_flgを更新
+    public function updateTestDeleteFlg($test_id, $delete_flg)
+    {
+        $table = 'test';
+        $where = 'id = ?'; 
+        $now = time();
+        $updated_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'delete_flg' => $delete_flg,
+            'deleted_at' => $updated_at,
+            'updated_at' => $updated_at,
+        ];
+        $arrWhereVal = [$test_id];
 
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+
+    // questionテーブルのレコードのdelete_flgを更新
+    public function updateQuestionDataByDeleteFlg($question_id, $delete_flg)
+    {
+        $table = 'question';
+        $where = 'id = ?'; 
+        $now = time();
+        $updated_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'delete_flg' => $delete_flg,
+            'updated_at' => $updated_at,
+            'deleted_at' => $updated_at
+        ];
+        $arrWhereVal = [$question_id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
     // questionテーブルから送信したtest_idの情報を更新（問題文、答え）
-    public function updateQuestionDataByQuestionId($question_id, $question, $answer_no, $delete_flg)
+    public function updateQuestionDataByQuestionId($question_id, $question, $answer_no)
     {
         $table = 'question';
         $where = 'id = ?'; 
@@ -277,11 +311,26 @@ Class Manager {
         $insData = [
             'question' => $question,
             'answer_no' => $answer_no,
+            'updated_at' => $updated_at,
+        ];
+        $arrWhereVal = [$question_id];
+
+        return  $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
+
+    // questionテーブルのテスト問題自体（test_id）のdelete_flgを１へ変更
+    public function updateQuestionDataByTestId($test_id, $delete_flg)
+    {
+        $table = 'question';
+        $where = 'test_id = ?'; 
+        $now = time();
+        $updated_at = date("Y/m/d H:i:s", $now);
+        $insData = [
             'delete_flg' => $delete_flg,
             'updated_at' => $updated_at,
             'deleted_at' => $updated_at
         ];
-        $arrWhereVal = [$question_id];
+        $arrWhereVal = [$test_id];
 
         return  $this->db->update($table, $where, $insData, $arrWhereVal);
     }

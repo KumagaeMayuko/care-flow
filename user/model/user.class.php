@@ -41,8 +41,8 @@ Class User {
     {
         $table = 'question';
         $column = '';
-        $where = 'test_id = ?';
-        $arrVal = [$test_id];
+        $where = 'test_id = ? AND delete_flg = ?';
+        $arrVal = [$test_id, '0'];
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
