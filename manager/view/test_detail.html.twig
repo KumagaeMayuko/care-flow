@@ -1,0 +1,18 @@
+{% extends 'manager/view/base.html.twig' %}
+
+{% block title %}テスト問題{% endblock %}
+{% block content %}
+    <h2 class='h2'>テスト問題</h2>
+    <form action='test_edit.php' method='post'>
+        <p>タイトル：{{test.title}}</p>
+        {% for key, question in questions %}
+            <p><b>問題：{{key+1}}</b></p>
+            <p>{{question.question}}</p>
+            <p>回答：{{question.answer_no}}</p>
+        {% endfor %}
+        <br>
+        <input type="submit" name="test_edit" value="編集">
+        <input type="hidden" name="test_id" value="{{id}}">
+    </form>
+    <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">管理者トップ画面へ戻る</a>   
+{% endblock %}
