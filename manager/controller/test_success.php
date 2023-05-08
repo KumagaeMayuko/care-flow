@@ -25,8 +25,8 @@ $url = "top.php";
 $url_message = 'トップページへ戻る';
 
 $context['message'] = $message;
-$context['url'] = $url;
-$context['url_message'] = $url_message;
+// $context['url'] = $url;
+// $context['url_message'] = $url_message;
 
 $template = $twig->loadTemplate('user/view/process_complete.html.twig');
 $template->display( $context );
