@@ -44,7 +44,11 @@ switch($mode){
         //エラーメッセージの配列作成
         $errArr = $common->errorCheck($dataArr);
         $err_check = $common->getErrorFlg();
-        $csrf->tokenCheck();
+        $res = $csrf->tokenCheck();
+        if ($res == false) {
+            header("Location:regist.php");
+        }
+        
         session_destroy();
         // err_check = false→エラーがありますよ！
         // err_check = true →エラーがないですよ！

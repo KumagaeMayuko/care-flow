@@ -37,9 +37,8 @@ foreach ($dataArr as $key => $value){
 $cateArr = $ctg->getCategories();
 $tree = $ctg->buildTree($cateArr);
 
-$csrf->tokenCreate();
+$csrf_token = $csrf->tokenCreate();
 $context = $common->getContext();
-$csrf_token = $_SESSION['csrf_token'];
 
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;

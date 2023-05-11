@@ -9,7 +9,7 @@ use common\model\PDODatabase;
 use common\model\Category;
 use common\model\Common;
 use info\model\Info;
-use common\model\Login;
+use common\model\CSRF;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ctg = new Category($db);
@@ -22,7 +22,6 @@ $twig = new \Twig_Environment( $loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
-$login = new Login;
 $context = $common->getContext();
 
 //モード判定（どの画面から来たかの判断）
@@ -42,6 +41,13 @@ if (isset($_POST['complete']) === true || isset($_POST['manager_edit_confirm']) 
 switch($mode){
     case 'confirm': //新規登録
         unset($_POST['confirm']);
+        $csrf = new CSRF();
+        // csrf_tokenのチェック
+        $res = $csrf->tokenCheck();
+        // csrf_tokenのチェックの結果、falseだった場合
+        if ($res == false) {
+            header("Location:post.php");
+        } 
         $dataArr = $_POST;
         //エラーメッセージの配列作成
         $errArr = $info->errorCheck($dataArr);

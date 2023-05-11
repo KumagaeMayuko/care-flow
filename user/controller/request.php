@@ -5,12 +5,24 @@ require_once dirname( __FILE__, 2) . '/model/Bootstrap.class.php';
 
 use user\model\Common;
 use user\model\Bootstrap;
+use common\model\CSRF;
 
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
 $twig = new \Twig_Environment( $loader, [ 
     'cache' => Bootstrap::CACHE_DIR
 ] );
 $common = new Common();
+$csrf = new CSRF();
+
+unset($_POST['submit']);
+
+// csrf_tokenのチェック
+$res = $csrf->tokenCheck();
+// csrf_tokenのチェックの結果、falseだった場合
+if ($res == false) {
+    header("Location:request_form.php");
+} 
+
 $common->requestEmailCheck($_POST['email']);
 
 $table = 'user';

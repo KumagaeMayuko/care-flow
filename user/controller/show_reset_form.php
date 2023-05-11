@@ -6,7 +6,7 @@ require_once dirname( __FILE__, 2) . '/model/Bootstrap.class.php';
 
 use user\model\Common;
 use user\model\Bootstrap;
-use user\model\CSRF;
+use common\model\CSRF;
 
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
 $twig = new \Twig_Environment( $loader, [ 
@@ -27,14 +27,14 @@ $arrVal = [$passwordResetToken];
 $passwordResetUser = $common->db->select($table, $col, $where, $arrVal);
 // 合致するユーザーがいなければ無効なトークンなので、処理を中断
 if (!$passwordResetUser) {
-    exit('無効なURLです');
+    exit("無効なURLです<br><a href='login.php'>Sign in?</a>");
 }
 
 // 今回はtokenの有効期間を24時間とする
 $tokenValidPeriod = (new \DateTime())->modify("24 hour")->format('Y-m-d H:i:s');
 // パスワードの変更リクエストが24時間以上前の場合、有効期限切れとする
 if ($passwordResetUser[0]['token_sent_at'] > $tokenValidPeriod) {
-    exit('有効期限切れです');
+    exit("有効期限切れです<br><a href='login.php'>Sign in?</a>");
 }
 
 // // formに埋め込むcsrf tokenの生成
