@@ -28,7 +28,7 @@ class Login
         // ログイン状態の場合ログイン後のページにリダイレクト
         if (isset($_SESSION["user_id"])) {
             session_regenerate_id(TRUE);
-            header("Location: user/controller/success.php");
+            header("Location: user/controller/top.php");
             exit();
         }
 
@@ -65,7 +65,7 @@ class Login
                     $_SESSION["manager_flg"] = $res[0]['manager_flg']; 
                     $_SESSION["delete_flg"] = $res[0]['delete_flg']; 
                     if($_SESSION['delete_flg'] === '0'){ // 削除済みの会員はログイン不可
-                        header("Location: success.php");
+                        header("Location: top.php");
                     } else {
                         $message= 'このアカウントは削除されています';
                     }

@@ -1,13 +1,46 @@
 <html>
+<head>
+    <meta charset="utf-8">
+    <link href="{{constant('user\\model\\Bootstrap::APP_URL')}}css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <title>パスワード再登録</title>
+    <style>
+        body {
+            margin: 50vh auto 0;
+            transform: translateY(-50%);
+            padding: 15px 30px;
+            color: #554d4d;
+            text-align: center;
+            width: 500px;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+</head>
 <body>
+    <h2>パスワードリセット</h2>
     <form action="request.php" method="POST">
-        <p>パスワードリセット</p>
-        <input type="hidden" name="csrf_token" value="{{'csrf_token'}}">
-        <label>
-            メールアドレスを入力してください。リセット用URLをお送りします。
-            <input type="email" name="email" value="">
-        </label>
-        <button type="submit">送信</button>
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <p>パスワードリセット用URLを送信します</p>
+            <input type="email" name="email" placeholder="* email" id="address" size="40" class="form-control" />
+            {% if errArr. email | length > 0 %}<br><span
+                class="red">{{errArr.email}}</span>{% endif %}
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">Send</button>
+        <div class="row mb-4">
+            <div class="col">
+            <!-- Simple link -->
+            <a href="login.php">Sign in?</a>
+        </div>
+        </div>
     </form>
 </body>
 </html>

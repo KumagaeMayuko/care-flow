@@ -34,7 +34,7 @@ $passwordResetUser = $common->db->select($table, $col, $where, $arrVal);
 
 // どのレコードにも合致しない無効なtokenであれば、処理を中断
 if (!$passwordResetUser) {
-    exit('無効なURLです');
+    exit('無効なURLです<br><a href="request_form.php">Forgot password?</a>');
 }
 
 // テーブルに保存するパスワードをハッシュ化
@@ -68,6 +68,6 @@ $context = [];
 $context['message'] = $message;
 $context['url'] = $url;
 $context['url_message'] = $url_message;
-$template = $twig->loadTemplate('user/view/process_complete.html.twig');
+$template = $twig->loadTemplate('user/view/not_login_base.html.twig');
 $template->display( $context );
 ?>

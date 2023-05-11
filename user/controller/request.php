@@ -23,15 +23,13 @@ $res = $common->db->select($table, $col, $where, $arrVal);
 // 「未登録です」と表示すると、万が一そのメールアドレスを知っている別人が入力していた場合、「このメールアドレスは未登録である」と情報を与えてしまう
 
 if (!$res) {
-    $message = 'このメールドレスは登録されていません';
-    $url = 'regist.php';
-    $url_message = '会員登録画面へ';
     $context = [];
 
-    $context['message'] = $message;
-    $context['url'] = $url;
-    $context['url_message'] = $url_message;
-    $template = $twig->loadTemplate('user/view/process_complete.html.twig');
+    $context['title'] = '送信不可';
+    $context['message'] = 'このメールドレスは登録されていません';
+    $context['url'] = 'request_form.php';
+    $context['url_message'] = 'back';
+    $template = $twig->loadTemplate('user/view/not_login_base.html.twig');
     $template->display( $context );
 } else {
     // 既にパスワードリセットのフロー中（もしくは有効期限切れ）かどうかを確認
@@ -97,12 +95,13 @@ if (!$res) {
         exit($e->getMessage());
     }
 
-    $message = 'メールを送信しました';
     $context = [];
+    $context['title'] = 'メール送信完了';
+    $context['message'] = 'メールを送信しました';
+    $context['url'] = 'login.php';
+    $context['url_message'] = 'Sign in?';
 
-    $context['message'] = $message;
-
-    $template = $twig->loadTemplate('user/view/process_complete.html.twig');
+    $template = $twig->loadTemplate('user/view/not_login_base.html.twig');
     $template->display( $context );
 }
 

@@ -1,20 +1,43 @@
 <html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <title>パスワードリセット</title>
+    <style>
+        body {
+        margin: 50vh auto 0;
+        transform: translateY(-50%);
+        padding: 15px 30px;
+        color: #554d4d;
+        text-align: center;
+        width: 500px;
+    }
+    </style>
+</head>
 <body>
-    <p>パスワードリセット</p>
+    <h2>パスワードリセット</h2>
     <form action="reset.php" method="POST">
         <input type="hidden" name="password_reset_token" value="{{ passwordResetToken }}">
-        <label>
-            新しいパスワード
-            <input type="password" name="password">
-        </label>
-        <br>
-        <label>
-            パスワード（確認用）
-            <input type="password" name="password_confirmation">
-        </label>
-        <br>
-        
-        <button type="submit">送信する</button>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="password" placeholder="* Password" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
+            {%if errArr.pass | length > 0 %}<br><span class="red">{{errArr.pass}}</span>{%endif%}
+        </div>
+
+        <!-- Password confirm input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="password_confirmation" placeholder="* Password Confirm" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
+            {%if errArr.pass_confirm | length > 0 %}<br><span class="red">{{errArr.pass_confirm}}</span>{%endif%}
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p><a href="login.php">Sign in?</a></p>
+        </div>
     </form>
 </body>
 </html>

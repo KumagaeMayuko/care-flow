@@ -3,37 +3,69 @@
     <head>
         <meta charset="utf-8">
         <title>会員登録確認</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <style>
+            .confirm {
+                margin: 50vh auto 0;
+                transform: translateY(-50%);
+                padding: 15px 30px;
+                color: #554d4d;
+                text-align: center;
+                width: 500px;
+                box-shadow: 0px 0px 10px #9b9b9b;
+                line-height: 60px;
+                border-radius: 10px;
+            }
+
+            .confirm-table {
+                margin: 0px;
+                display: initial;
+            }
+
+            .back {
+                background-color: #9b9b9b;
+                border-color: #9b9b9b;
+            }
+
+            .back:hover {
+                background-color: #c3c3c3;
+                border-color: #c3c3c3;
+            }
+        </style>
     </head>
     <body>
-        <form method="post" action="confirm.php">
-            <table>
-                <tr>
-                    <th>お名前(フルネーム)</th>
-                    <td>{{dataArr.name}}</td>
-                </tr>
-                <tr>
-                    <th>メールアドレス</th>
-                    <td>{{dataArr.email}}</td>
-                </tr>
-                <tr>
-                    <th>パスワード</th>
-                    <td>{{dataArr.pass}}</td>
-                </tr>
-            </table>
-            <div>
-                <input type="submit" name="back" value="戻る">
-                <input type="submit" name="complete" value="登録完了">
-                {% for key,value in dataArr %}
-                    <!-- ↓下記メソッドで配列か否かをチェックしている -->
-                    {% if value is iterable%}
-                        {% for v in value %}
-                            <input type="hidden" name="{{key}}[]" value="{{v}}">
-                        {% endfor%}
-                    {% else %}
-                        <input type="hidden" name="{{key}}" value="{{value}}">
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </form> 
+        <div class="confirm">
+            <form method="post" action="confirm.php">
+                <table class="confirm-table">
+                    <tr>
+                        <th>お名前(フルネーム)</th>
+                        <td>{{dataArr.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>メールアドレス</th>
+                        <td>{{dataArr.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>パスワード</th>
+                        <td>{{dataArr.pass}}</td>
+                    </tr>
+                </table>
+                <div>
+                    <button type="submit" name="back" class="back btn btn-primary btn-block mb-4">back</button>
+                    <button type="submit" name="complete" class="btn btn-primary btn-block mb-4">Sign up</button>
+                    {% for key,value in dataArr %}
+                        <!-- ↓下記メソッドで配列か否かをチェックしている -->
+                        {% if value is iterable%}
+                            {% for v in value %}
+                                <input type="hidden" name="{{key}}[]" value="{{v}}">
+                            {% endfor%}
+                        {% else %}
+                            <input type="hidden" name="{{key}}" value="{{value}}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </form>
+        </div> 
     </body>
 </html>

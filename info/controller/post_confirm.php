@@ -47,8 +47,10 @@ switch($mode){
         $errArr = $info->errorCheck($dataArr);
         $err_check = $info->getErrorFlg();
 
+        // 戻らずに投稿（1回目）
         if(isset($_FILES['image'])){
             $tmp_image = $_FILES['image'];
+        // １回戻ってからの投稿
         } elseif ($_POST['image_name']) {
              $tmp_image = $_POST['image_name'];
         }
