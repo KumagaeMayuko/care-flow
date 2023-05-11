@@ -4,7 +4,7 @@ namespace user\controller;
 require_once dirname( __FILE__, 2) . '/model/Bootstrap.class.php';
 
 use user\model\Bootstrap;
-use user\model\CSRF;
+use common\model\CSRF;
 
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
@@ -28,8 +28,7 @@ foreach ($dataArr as $key => $value){
     $errArr[ $key ] = '';
 }
 
-$csrf->tokenCreate();
-$csrf_token = $_SESSION['csrf_token'];
+$csrf_token = $csrf->tokenCreate();
 $context = [];
 
 $context['dataArr'] = $dataArr;

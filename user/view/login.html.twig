@@ -13,25 +13,34 @@
         text-align: center;
         width: 500px;
     }
+    .red {
+        color: red;
+    }
     </style>
 </head>
 <body>
     <h2>ログイン</h2>
     <form action="login.php" method="post">
         <input type="hidden" name="csrf_token" value="{{csrf_token}}">
-            <!-- Name input -->
-            <div class="form-outline mb-4">
-                <input type="text" name="name" placeholder="Name" id="form2Example1" class="form-control" />
-            </div>
+        <!-- Name input -->
+        <div class="form-outline mb-4">
+            <input type="text" name="name" placeholder="Name" id="form2Example1" class="form-control" />
+            {% if message. name | length > 0 %}<br><span
+                class="red">{{message.name}}</span>{% endif %}
+        </div>
 
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-                <input type="email" name="email" placeholder="email" id="form2Example1" class="form-control" />
-            </div>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input type="email" name="email" placeholder="email" id="form2Example1" class="form-control" />
+            {% if message. email | length > 0 %}<br><span
+                class="red">{{message.email}}</span>{% endif %}
+        </div>
 
-            <!-- Password input -->
-            <div class="form-outline mb-4">
-                <input type="password" name="pass" placeholder="Password" id="form2Example2" class="form-control" />
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="pass" placeholder="Password" id="form2Example2" class="form-control" />
+            {% if message. pass | length > 0 %}<br><span
+                class="red">{{message.pass}}</span>{% endif %}
         </div>
 
         <!-- 2 column grid layout for inline styling -->
@@ -43,7 +52,7 @@
         </div>
 
         <!-- Submit button -->
-        <button type="submit" name="送信" class="btn btn-primary btn-block mb-4">Sign in</button>
+        <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
         <!-- Register buttons -->
         <div class="text-center">

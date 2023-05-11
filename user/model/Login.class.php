@@ -8,7 +8,7 @@ use user\model\Bootstrap;
 
 class Login 
 {
-    public $message = '';
+    public $message = [];
     public $manager_message = '';
     public $res = [];
     public $db = null;
@@ -20,61 +20,70 @@ class Login
         $this->db = $db;
         $this->dbh = $db->dbh;
     }
-    public function checkSession()
+    public function checkLogin()
     {
         //セッションを使うことを宣言
         session_start();
-
+        
         // ログイン状態の場合ログイン後のページにリダイレクト
         if (isset($_SESSION["user_id"])) {
             session_regenerate_id(TRUE);
-            header("Location: user/controller/top.php");
+            header("Location: top.php");
             exit();
         }
-
-        //postされて来なかったとき
-        if (count($_POST) === 0) {
-            $message = "";
+        
+        $not_empty_flg = true;
+        if (empty($_POST['name'])) {
+            $message['name'] = '名前を入力してください';
+            $not_empty_flg = false;
         }
-        //postされて来た場合
-        else {
-        //ユーザー名またはパスワードが送信されて来なかった場合
-            if(empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["pass"])) {
-                $message = "ユーザー名とメールアドレスとパスワードを入力してください";
-            } 
-            //ユーザー名とパスワードが送信されて来た場合
+        if (empty($_POST['email'])) {
+            $message['email'] = 'メールアドレスを入力してください';
+            $not_empty_flg = false;
+        }
+        if (empty($_POST['pass'])) {
+            $message['pass'] = 'パスワードを入力してください';
+            $not_empty_flg = false;
+        }
+        //全ての値が送信されて来た場合
+        if ($not_empty_flg) {
+            //post送信されてきたemailがデータベースにあるか検索
+            $table = 'user';
+            $col = '';
+            $where = 'email = ?'; 
+            $arrVal = [$_POST['email']];
+            $res = $this->db->select($table, $col, $where, $arrVal);
+
+            //検索したユーザー名に対してパスワードが正しいかを検証
+            //正しくないとき
+
+            if (!password_verify($_POST['pass'], $res[0]['pass'])) {
+                $message['pass']="パスワードが違います";
+            }
+            //正しいとき
             else {
-                //post送信されてきたemailがデータベースにあるか検索
-                $table = 'user';
-                $col = '';
-                $where = 'email = ?'; 
-                $arrVal = [$_POST['email']];
-                $res = $this->db->select($table, $col, $where, $arrVal);
-
-                //検索したユーザー名に対してパスワードが正しいかを検証
-                //正しくないとき
-
-                if (!password_verify($_POST['pass'], $res[0]['pass'])) {
-                    $message="パスワードが違います";
-                }
-                //正しいとき
-                else {
-                    session_regenerate_id(TRUE); //セッションidを再発行
-                    $_SESSION["user_id"] = $res[0]['id']; //セッションにログイン情報を登録
-                    $_SESSION["name"] = $res[0]['name']; 
-                    $_SESSION["manager_flg"] = $res[0]['manager_flg']; 
-                    $_SESSION["delete_flg"] = $res[0]['delete_flg']; 
-                    if($_SESSION['delete_flg'] === '0'){ // 削除済みの会員はログイン不可
-                        header("Location: top.php");
-                    } else {
-                        $message= 'このアカウントは削除されています';
-                    }
+                session_regenerate_id(TRUE); //セッションidを再発行
+                $_SESSION["user_id"] = $res[0]['id']; //セッションにログイン情報を登録
+                $_SESSION["name"] = $res[0]['name']; 
+                $_SESSION["manager_flg"] = $res[0]['manager_flg']; 
+                $_SESSION["delete_flg"] = $res[0]['delete_flg']; 
+                if($_SESSION['delete_flg'] === '0'){ // 削除済みの会員はログイン不可
+                    header("Location: top.php");
+                } else {
+                    $message['name']= 'このアカウントは削除されています';
                 }
             }
         }
         
         $this->message = $message;
+    }
 
+
+    public function loginByCsrfToken($res_csrftoken_check)
+    {
+        if($res_csrftoken_check) {
+            $this->checkLogin();
+        }
     }
     public function managerCheck()
     {

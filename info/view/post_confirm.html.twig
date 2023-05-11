@@ -4,6 +4,7 @@
 {% block content %}
     <h2 class='h2'>確認画面</h2>
     <form method="post" action="post_confirm.php">
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
         <table>
             <tr>
                 <th>タイトル</th>
