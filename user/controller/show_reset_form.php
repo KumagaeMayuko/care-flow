@@ -33,7 +33,6 @@ if (!$passwordResetUser) {
 // 今回はtokenの有効期間を24時間とする
 $tokenValidPeriod = (new \DateTime())->modify("24 hour")->format('Y-m-d H:i:s');
 // パスワードの変更リクエストが24時間以上前の場合、有効期限切れとする
-var_dump($passwordResetUser[0]['token_sent_at']);
 if ($passwordResetUser[0]['token_sent_at'] > $tokenValidPeriod) {
     exit('有効期限切れです');
 }

@@ -9,7 +9,11 @@
         <p>作成日時：{{value.create_at}}</p>
         <p>作成者：{{value.name}}</p>
         <p>内容：{{value.content}}</p>
-        <p><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
+        {% if value.image is defined and value.image != ''%}
+            <p>画像：<img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
+        {% else %}
+            <p>画像：なし</p>
+        {% endif%}
         <div id="edit">
             <a href="../../info/controller/edit_detail.php?id={{value.id}}"><input type="button" name="edit" value="編集" id="edit" /></a>
         </div>
@@ -17,5 +21,5 @@
             <a href="../../info/controller/delete.php?id={{value.id}}"><input type="button" name="delete" value="削除" id="delete" /></a>
         </div>
     {% endfor %}
-    <a href="../../user/controller/staff_top.php">トップページへ戻る</a>
+    <a href="../../user/controller/top.php">トップページへ戻る</a>
 {% endblock %}

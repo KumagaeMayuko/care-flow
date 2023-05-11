@@ -20,8 +20,8 @@
             <tr>
                 <th>画像</th>
                 <td>
-                    {% if dataArr.image_name is defined %}
-                        あり<br>
+                    {% if image_name is defined %}
+                        <p><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/tmp/{{image_name}}" width="300"/></p><br>
                     {% else %}
                         なし<br>
                     {% endif %}
@@ -31,9 +31,9 @@
                 <th>管理者確認</th>
                 <td>
                     {% if dataArr.check_flg == 'on' %}
-                        不要<br>
-                    {% else %}
                         必要<br>
+                    {% else %}
+                        不要<br>
                     {% endif %}
                 </td>
             </tr>

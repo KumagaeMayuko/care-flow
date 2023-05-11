@@ -18,9 +18,25 @@ $user = new User;
 $common = new Common;
 $manager = new Manager;
 
-if(!empty($_POST['test_edit'])){  //編集画面
-    unset($_POST['test_edit']);
-    $test_id = $_POST['test_id'];
+$dataArr = $_POST;
+function getModeTest($dataArr) {
+    if(!empty($dataArr['test_edit'])) {
+        return 'test_edit';
+    }
+    if(!empty($dataArr['test_delete'])) {
+        return 'test_delete';
+    }
+    if(!empty($dataArr['test_edit_complete'])) {
+        return 'test_edit_complete';
+    }
+}
+
+$mode = getModeTest($dataArr);
+
+
+if ($mode == 'test_edit') {
+    unset($dataArr['test_edit']);
+    $test_id = $dataArr['test_id'];
     // 指定したidのtestテーブル情報を取得
     $test = $user->getTestDataById($test_id);
     // 指定したidのquestionデータの取得
@@ -34,15 +50,14 @@ if(!empty($_POST['test_edit'])){  //編集画面
 
     $template = $twig->loadTemplate($template);
     $template->display( $context );
-
-} elseif (!empty($_POST['test_delete'])){ //detail画面から削除ボタンが押された時
-    unset($_POST['test_delete']);
-    $test_id = $_POST['test_id'];
+} elseif ($mode == 'test_delete'){
+    unset($dataArr['test_delete']);
+    $test_id = $dataArr['test_id'];
     // questionの問題全体（test_id）delete_flgを１へ変更
     $delete_flg = '1';
-    $questionRes = $manager->updateQuestionDataByTestId($test_id, $delete_flg); 
+    $questionRes = $manager->updateQuestionDataByTestId($test_id, $delete_flg);
     // testのdelete_flgを１へ変更
-    $testRes = $manager->updateTestDeleteFlg($test_id, $delete_flg); 
+    $testRes = $manager->updateTestDeleteFlg($test_id, $delete_flg);
     // testのタイトルを一覧画面で表示するためにデータを取得
     $tests = $manager->getTestData();
     $context = $common->getContext();
@@ -51,15 +66,15 @@ if(!empty($_POST['test_edit'])){  //編集画面
 
     $template = $twig->loadTemplate($template);
     $template->display( $context );
-
-} elseif (!empty($_POST['test_edit_complete'])){  // 編集画面からPOSTされた時
-    unset($_POST['test_edit_complete']);
-    $test_id = $_POST['test_id']; 
-    $title = $_POST['title'];  
+} elseif ($mode == 'test_edit_complete'){  // 編集画面からPOSTされた時
+    unset($dataArr['test_edit_complete']);
+    $test_id = $dataArr['test_id'];
+    $title = $dataArr['title'];  
     $res = $manager->updateTestTitle($test_id, $title);  // testテーブルにタイトルを追加
-    unset($_POST['title']);
-    unset($_POST['test_id']);
-    $keys_post[] = array_keys($_POST);
+    // $_POSTのKeyをユニークにする
+    unset($dataArr['title']);
+    unset($dataArr['test_id']);
+    $keys_post[] = array_keys($dataArr);
     $keys_result = array();
     foreach ($keys_post[0] as $key) {
         $key = preg_replace('/\D/', '', $key); // 数字以外の文字列を削除
@@ -69,19 +84,21 @@ if(!empty($_POST['test_edit'])){  //編集画面
 
     foreach($keys_unique as $key) {
         $question_id = $key;
-        $question = $_POST['question_id_'. $key];
-        $answer_no = $_POST['answer_no_id_'. $key];
-        $newQuestion = $_POST['question_'. $key];
-        $newAnswer_no = $_POST['answer_no_'. $key];
+        // すでにある問題を更新する場合に代入
+        $question = $dataArr['question_id_'. $key];
+        $answer_no = $dataArr['answer_no_id_'. $key];
+        // 新規で問題を追加する場合に代入
+        $newQuestion = $dataArr['question_'. $key];
+        $newAnswer_no = $dataArr['answer_no_'. $key];
         // 編集で問題文を削除した場合にdelete_flgを１に変更
-        if(isset($_POST['remove_flg_question_id_'. $key]) && $_POST['remove_flg_question_id_'. $key] == '1'){
+        if(isset($dataArr['remove_flg_question_id_'. $key]) && $dataArr['remove_flg_question_id_'. $key] == '1'){
             $delete_flg = '1';
             $res = $manager->updateQuestionDataByDeleteFlg($question_id, $delete_flg);
         }
         // 既存の問題文を更新
         if(isset($question) && isset($answer_no)){
             $quesitonUpdataRes = $manager->updateQuestionDataByQuestionId($question_id, $question, $answer_no);
-        }   
+        }
         // 問題文を登録
         if(isset($newQuestion) && isset($newAnswer_no)){
             $insQuestionData = $manager->insertQuestionData($test_id, $newQuestion, $newAnswer_no);
