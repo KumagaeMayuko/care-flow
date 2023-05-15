@@ -1423,3 +1423,5 @@
 [SQL_LOG:2023-05-15 13:57:36]: SELECT * FROM user  WHERE email = ?     [plplplpl@hoge.com]
 [SQL_LOG:2023-05-15 13:57:37]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
 [SQL_LOG:2023-05-15 14:01:32]: SELECT  email FROM  user  WHERE  email = ?     [aaa@hoge.com]
+[SQL_LOG:2023-05-15 14:06:45]: SELECT * FROM user  WHERE email = ?     [mayukokumagae315@gmail.com]
+[SQL_LOG:2023-05-15 14:06:45]: SELECT id, ctg_name, parent_id FROM category  WHERE delete_flg = ?     [0]
