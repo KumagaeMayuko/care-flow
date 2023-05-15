@@ -78,12 +78,13 @@ class Common
     public function passCheck()
     {
         // パスワードが8文字未満の場合、エラーメッセージを表示
-        if (strlen($this->dataArr['pass']) < 8) {
-        echo 'aaaa';
-            $this->errArr['pass'] = 'パスワードを8桁以上で入力してください' ;
-        } elseif (strlen($this->dataArr['pass_confirm']) < 8){
-            $this->errArr['pass_confirm'] = "パスワード（確認用）を8桁以上で入力してください";
-        } else if ($this->dataArr['pass'] !== $this->dataArr['pass_confirm']) {
+        if (preg_match('/^[a-zA-Z0-9!"#$%&\'()*+,-.\/:;<=>?@[\]^_`{|}~]{8,15}$/', $this->dataArr['pass']) === 0){
+            $this->errArr['pass'] = 'パスワードを正しい形式で入力してください';
+        } 
+        if (preg_match('/^[a-zA-Z0-9!"#$%&\'()*+,-.\/:;<=>?@[\]^_`{|}~]{8,15}$/', $this->dataArr['pass']) === 0){
+            $this->errArr['pass_confirm'] = 'パスワードを正しい形式で入力してください';
+        } 
+        if ($this->dataArr['pass'] !== $this->dataArr['pass_confirm']) {
             $this->errArr['pass_confirm'] = "パスワードが異なります"; 
         } 
     }
