@@ -13,26 +13,30 @@
         text-align: center;
         width: 500px;
     }
+        .red {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <h2>パスワードリセット</h2>
-    <form action="reset.php" method="POST">
+    <form action="show_reset_form.php" method="POST">
         <input type="hidden" name="password_reset_token" value="{{ passwordResetToken }}">
         <!-- Password input -->
         <div class="form-outline mb-4">
+            <p>パスワードは8桁以上英数字で入力してください</p>
             <input type="password" name="password" placeholder="* Password" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
-            {%if errArr.pass | length > 0 %}<br><span class="red">{{errArr.pass}}</span>{%endif%}
+            {%if  err_pass| length > 0 %}<br><span class="red">{{err_pass}}</span>{%endif%}
         </div>
 
         <!-- Password confirm input -->
         <div class="form-outline mb-4">
             <input type="password" name="password_confirmation" placeholder="* Password Confirm" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
-            {%if errArr.pass_confirm | length > 0 %}<br><span class="red">{{errArr.pass_confirm}}</span>{%endif%}
+            {%if err_pass_confirm | length > 0 %}<br><span class="red">{{err_pass_confirm}}</span>{%endif%}
         </div>
 
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+        <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">Send</button>
 
         <!-- Register buttons -->
         <div class="text-center">

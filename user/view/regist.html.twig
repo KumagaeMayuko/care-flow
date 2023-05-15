@@ -34,7 +34,7 @@
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" name="email" placeholder="* email" value="{{dataArr.pass}}" id="address" size="40" class="form-control" />
+            <input type="email" name="email" placeholder="* email" value="{{dataArr.pass}}" id="form2Example2" size="40" class="form-control" />
             {% if errArr. email | length > 0 %}<br><span
                 class="red">{{errArr.email}}</span>{% endif %}
         </div>
@@ -42,13 +42,13 @@
         <!-- Password input -->
         <div class="form-outline mb-4">
             <p>パスワードは8桁以上で入力してください</p>
-            <input type="password" name="pass" pattern=".{8,}" placeholder="* Password" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
+            <input type="password" name="pass" placeholder="* Password" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
             {%if errArr.pass | length > 0 %}<br><span class="red">{{errArr.pass}}</span>{%endif%}
         </div>
 
         <!-- Password confirm input -->
         <div class="form-outline mb-4">
-            <input type="password" name="pass_confirm" pattern=".{8,}" placeholder="* Password Confirm" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
+            <input type="password" name="pass_confirm" placeholder="* Password Confirm" value="{{dataArr.pass}}" id="form2Example2" class="form-control" />
             {%if errArr.pass_confirm | length > 0 %}<br><span class="red">{{errArr.pass_confirm}}</span>{%endif%}
         </div>
 

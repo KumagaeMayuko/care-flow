@@ -36,37 +36,66 @@ if (!$passwordResetUser) {
     exit('無効なURLです<br><a href="request_form.php">Forgot password?</a>');
 }
 
-// テーブルに保存するパスワードをハッシュ化
-$hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-// usersテーブルとpassword_resetsテーブルの原子性を原始性を保証するため、トランザクションを設置
-try {
-    $common->db->dbh->beginTransaction();
-
-    // 該当ユーザーのパスワードを更新
-    $dataArr = [
-        'pass' => $hashedPassword,
-    ];
-    $res = $common->db->update('user', 'email = ?', $dataArr, $passwordResetUser[0]['email']);
-    // 用が済んだので、パスワードリセットテーブルから削除
-    $delete_res = $common->db->delete('password_resets', 'email = ?', [$passwordResetUser[0]['email']]);
-
-    $common->db->dbh->commit();
-
-} catch (\Exception $e) {
-    $common->db->dbh->rollBack();
-
-    exit($e->getMessage());
+// パスワードが8文字以上英数字ではない場合、エラーメッセージを表示
+if (preg_match('/^[a-zA-Z0-9!"#$%&\'()*+,-.\/:;<=>?@[\]^_`{|}~]{8,15}$/', $_POST['password']) === 0){
+    $err_pass = 'パスワードを正しい形式で入力してください';
+} 
+if (preg_match('/^[a-zA-Z0-9!"#$%&\'()*+,-.\/:;<=>?@[\]^_`{|}~]{8,15}$/', $_POST['password_confirmation']) === 0){
+    $err_pass_confirm = 'パスワードを正しい形式で入力してください';
 }
+if ($_POST['password'] !== $_POST['password_confirmation']) {
+    $err_pass_confirm = "パスワードが異なります"; 
+} 
 
-$message = 'パスワードの変更が完了しました。';
-$url = 'login.php';
-$url_message = 'ログイン画面へ';
-$context = [];
+if(!isset($err_pass) & !isset($err_pass_confirm)){
+    // テーブルに保存するパスワードをハッシュ化
+    $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-$context['message'] = $message;
-$context['url'] = $url;
-$context['url_message'] = $url_message;
-$template = $twig->loadTemplate('user/view/not_login_base.html.twig');
-$template->display( $context );
+    // usersテーブルとpassword_resetsテーブルの原子性を原始性を保証するため、トランザクションを設置
+    try {
+        $common->db->dbh->beginTransaction();
+
+        // 該当ユーザーのパスワードを更新
+        $dataArr = [
+            'pass' => $hashedPassword,
+        ];
+        $res = $common->db->update('user', 'email = ?', $dataArr, $passwordResetUser[0]['email']);
+        // 用が済んだので、パスワードリセットテーブルから削除
+        $delete_res = $common->db->delete('password_resets', 'email = ?', [$passwordResetUser[0]['email']]);
+
+        $common->db->dbh->commit();
+
+    } catch (\Exception $e) {
+        $common->db->dbh->rollBack();
+
+        exit($e->getMessage());
+    }
+    $message = 'パスワードの変更が完了しました。';
+    $url = 'login.php';
+    $url_message = 'ログイン画面へ';
+
+    $context = [];
+    $context['message'] = $message;
+    $context['url'] = $url;
+    $context['url_message'] = $url_message;
+    $template = $twig->loadTemplate('user/view/not_login_base.html.twig');
+    $template->display( $context );
+} else {
+    $context = [];
+    $context['err_pass'] = $err_pass;
+    $context['err_pass_confirm'] = $err_pass_confirm;
+    header('Location:show_reset_form.php');
+}
+// $message = 'パスワードの変更が完了しました。';
+// $url = 'login.php';
+// $url_message = 'ログイン画面へ';
+
+// $context = [];
+// $context['message'] = $message;
+// $context['url'] = $url;
+// $context['url_message'] = $url_message;
+// $context['err_pass'] = $err_pass;
+// $context['err_pass_confirm'] = $err_pass_confirm;
+// $template = $twig->loadTemplate('user/view/not_login_base.html.twig');
+// $template->display( $context );
 ?>
