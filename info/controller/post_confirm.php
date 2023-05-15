@@ -52,7 +52,6 @@ switch($mode){
         //エラーメッセージの配列作成
         $errArr = $info->errorCheck($dataArr);
         $err_check = $info->getErrorFlg();
-
         // 戻らずに投稿（1回目）
         if(isset($_FILES['image'])){
             $tmp_image = $_FILES['image'];
@@ -85,7 +84,8 @@ switch($mode){
             unlink($file_path);
         }
 
-
+        $category = $ctg->getCategorieById($dataArr['ctg_id']);
+        $context['ctg_name'] = $category[0]['ctg_name'];
         //エラーなければconfirm.tpl あるとregist.tpl
         $template = ($err_check === true)? 'info/view/post_confirm.html.twig':'info/view/post.html.twig';
         break;
@@ -134,7 +134,7 @@ switch($mode){
         unset($dataArr['image_name']);  
         $column = '';
         $insData = '';
-
+        
         $cateArr = $ctg->getCategories();
 
         $cat_index = '';
@@ -163,15 +163,16 @@ switch($mode){
             $insDataArr = [];
             $insDataArr = $dataArr; 
             unset($insDataArr['id']); 
+            unset($insDataArr['ctg_id']); 
             $res = $info->updateInfoData($dataArr['id'], $insDataArr);
-
+            
             // info_categoryテーブルの既にあるレコードの削除
             $deleteRes = $info->deleteInfoCategoryData($dataArr['id']);
 
             // 新たにinfo_categoryテーブルのレコード作成
             $insdata = [
                 'info_id' => $dataArr['id'],
-                'ctg_id' => $ctg_id
+                'ctg_id' => $dataArr['ctg_id']
             ];
             $info->infoCategoryInsert($insdata);
             $template = 'info/view/post_success.html.twig'; 
@@ -183,26 +184,22 @@ switch($mode){
             $insDataArr = [];
             $insDataArr = $dataArr; 
             $insDataArr['check_flg'] = '0';
-            unset($insDataArr['id']); 
+            unset($insDataArr['id']);
+            unset($insDataArr['ctg_id']);
             $res = $info->updateInfoData($dataArr['id'], $insDataArr);
 
-            // info_categoryテーブルの既にあるレコードの削除
-            $deleteRes = $info->deleteInfoCategoryData($dataArr['id']);
-
-            // 新たにinfo_categoryテーブルのレコード作成
-            $insdata = [
-                'info_id' => $dataArr['id'],
-                'ctg_id' => $ctg_id
-            ];
-            $info->infoCategoryInsert($insdata); 
-
+            $ctg_id = $dataArr['ctg_id'];
+            $info_id = $dataArr['id'];
+            $updateRes = $info->updateInfoCategoryData($info_id, ['ctg_id'=>$ctg_id]);
             $template = 'manager/view/manager_post_success.html.twig';
         } else {
+            $ctg_id = $dataArr['ctg_id'];
+            unset($dataArr['ctg_id']);
             $dataArr['user_id'] = $_SESSION['user_id'];
+
             $res = $db->insert('info', $dataArr); 
 
             $infoUserRes = $info->getInfoUserData($dataArr['id']);
-
             //　info_categoryテーブル作成
             $info_id = $db->dbh->lastInsertId();
             $insdata = [

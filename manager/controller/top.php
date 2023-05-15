@@ -22,24 +22,39 @@ $common = new Common;
 
 $context = $common->getContext();
 
-if(!empty($_POST['ctg_name'])){
+// 場合分け
+if (!empty($_POST['ctg_name'])) {
+    $mode = 'create';
+}
+if (!empty($_POST['id'])) {
+    $mode = 'delete';
+}
+
+// カテゴリーの追加
+if($mode == 'create'){
     $ctg_name = $_POST['ctg_name'];
     $parent_id = $_POST['parent_id'];
     $res = $manager->insertCategoryData($ctg_name, $parent_id);
     $_POST = []; 
     header('Location:top.php');
     exit;
-} elseif(!empty($_POST['id'])){
+}
+
+if($mode == 'delete'){
+    // カテゴリーの削除
     $id = $_POST['id'];
     $res = $manager->getCategoryByParentId($id);
-    if(!empty($res)){ // 削除するカテゴリーがtopの親だった場合
+    var_dump($res);
+    if(!empty($res)){ // 子カテゴリーが存在する場合
+        var_dump('aaaaa');
         $parent_res = $manager->updateCategoryDataByDeleteFlg($id);
         $children_res = $manager->updateCategoryDataByParentId($id);
         $_POST = [];
         header('Location:top.php');
         exit;
-    } else { // 子カテゴリーが存在する場合
-        $children_res = $manager->updateCategoryDataByParentId($id);
+    } else { // 子カテゴリーが存在しない場合
+        var_dump('bbbbb');
+        $res = $manager->updateCategoryDataById($id);
         $_POST = []; 
         header('Location:top.php');
         exit; 

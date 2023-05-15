@@ -1,9 +1,9 @@
-<p>この投稿を本当に削除しますか？</p>
-<table>
-    <tr>
-        <th>カテゴリー：</th>
-        <td>{{info_detail.ctg_name}}</td>
-    </tr>
+{% extends 'user/view/base.html.twig' %}
+
+{% block title %}記事削除{% endblock %}
+{% block content %}
+    <p>この投稿を本当に削除しますか？</p>
+    <table>
     <tr>
         <th>タイトル：</th>
         <td>{{info_detail.title}}</td>
@@ -22,13 +22,19 @@
     </tr>
     <tr>
         <th>画像：</th>
-        <td><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{info_detail.image}}"/></td>
+        {% if info_detail.image is not empty %}
+            <td><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{info_detail.image}}"/></td>
+        {% else %}
+            <td>なし</td>
+        {% endif %}
     </tr>
-</table>
-<form method="post" action="delete.php">
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
-    <input type="hidden" name="id" value="{{info_detail.id}}">
-    <input type="hidden" name="image" value="{{info_detail.image}}">
-    <button type="submit" name="delete_complete" value="delete_complete">削除</button>
-</form>
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+    </table>
+    <form method="post" action="delete.php">
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+        <input type="hidden" name="id" value="{{info_detail.id}}">
+        <input type="hidden" name="image" value="{{info_detail.image}}">
+        <button type="submit" name="delete_complete" value="delete_complete">削除</button>
+    </form>
+    <p>{{message}}</p>
+    <a class="none-link" href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+{% endblock %}

@@ -20,13 +20,13 @@
                 </tr> 
                 <tr>
                     <th>画像：</th>
-                    <th><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{post.image}}"/></th>
+                    <th><img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{post.image}}" width="300"/></th>
                 </tr> 
             </table>
             <input type="submit" name="manager_edit" value="編集">
             <input type="hidden" name="info_id" value="{{post.id}}">
         </form>
     </div>
+    <a href="info_check_list.php">一覧画面へ戻る</a><br><br>
     <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">トップページへ戻る</a><br>
-    <a href="info_check_list.php">一覧画面へ戻る</a>
 {% endblock %}

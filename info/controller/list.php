@@ -24,14 +24,29 @@ $twig = new \Twig_Environment($loader, [
 ]);
 
 $ctg_id = (isset($_GET['id']) === true && preg_match('/^[0-9]+$/', $_GET['id']) === 1) ? $_GET['id'] : '';
-$infos = $info->getInfoCategoryDataByCheckFlg($ctg_id, '0');
+// $infos = $info->getInfoCategoryDataByCheckFlg($ctg_id, '0');
 
-if(empty($infos)){
+// if(empty($infos)){
+//     $message = '投稿はありません。';
+// }
+
+$ctgChildren = $ctg->recursiveGetChildCategories($ctg_id);
+$ctgParent = $ctg->getCategorieById($ctg_id);
+$ctgAll = array_merge($ctgChildren, $ctgParent);
+$infoAll = [];
+foreach($ctgAll as $ctg ) {
+    $ctg_id = $ctg['id'];
+    $res = $info->getInfoCategoryData($ctg_id);
+    $infoAll = array_merge($infoAll, $res);
+}
+
+if(empty($infoAll)){
     $message = '投稿はありません。';
 }
 
 $context = $common->getContext();
-$context['infos'] = $infos;
+$context['infoAll'] = $infoAll;
+// $context['infos'] = $infos;
 
 $template = $twig->loadTemplate('info/view/list.html.twig');
 $template->display($context);

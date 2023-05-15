@@ -2,13 +2,16 @@
 
 {% block title %}TOPページ{% endblock %}
 {% block content %}
+    {% if message is defined %}
+        {{ message }}<br><br>
+    {% endif %}
     <h2 class="h2">医療情報ノート</h2>
     <div id="info_share">
         <div id="category">
         {% include 'user/view/category_list.html.twig' %}
         </div>
         <div id="post">
-            <a href="../../info/controller/post.php"><input type="button" name="post" value="新規投稿" id="post" /></a>
+            <a class="none-link" href="../../info/controller/post.php"><input class="btn btn-primary" type="button" name="post" value="新規投稿" id="post" /></a>
         </div>
     </div>
     

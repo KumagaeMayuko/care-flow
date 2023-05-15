@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use manager\model\manager;
 use info\model\info;
 
@@ -14,6 +15,7 @@ $twig = new \Twig_Environment( $loader, [
 ] );
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $manager = new manager;
+$common = new Common;
 $info = new info;
 
 $check_flg = '1';
@@ -23,7 +25,7 @@ foreach($checkPosts as $v){
         $post = $v;
     }
 }
-$context = [];
+$context = $common->getContext();
 $context['post'] = $post;
 
 $template = $twig->loadTemplate('manager/view/info_check_detail.html.twig');

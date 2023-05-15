@@ -21,19 +21,21 @@ $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
+session_start();
 
 $context = $common->getContext();
 
 $info_id = (isset($_GET['info_id']) === true && preg_match('/^[0-9]+$/', $_GET['info_id']) === 1) ? $_GET['info_id'] : '';
 
-$user_id = $_SESSION['user_id'];
+$session_user_id = $_SESSION['user_id'];
 
 // ユーザーが詳細画面へ遷移した際にread_statusテーブルを作成し、既読したことにする
 // （read_statusテーブルにデータがなければ、作成）
-$res = $info->createReadStatusDataNotExists($info_id, $user_id);
+$res = $info->createReadStatusDataNotExists($info_id, $session_user_id);
 
 $info_detail = $info->getInfoUserData($info_id);
 
 $context['info_detail'] = $info_detail;
+$context['session_user_id'] = $session_user_id;
 $template = $twig->loadTemplate('info/view/detail.html.twig');
 $template->display($context);

@@ -7,7 +7,8 @@ require_once dirname( __FILE__, 2) . '/model/Bootstrap.class.php';
 use user\model\PDODatabase;
 use user\model\Common;
 use user\model\Bootstrap;
-use user\model\CSRF;
+use common\model\CSRF;
+use user\model\Login;
 
 //テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR) ;
@@ -19,6 +20,7 @@ $twig = new \Twig_Environment( $loader, [
 // Bootstrap::DB_NAME);
 $common = new Common();
 $csrf = new CSRF();
+$login = new Login();
 
 //モード判定（どの画面から来たかの判断）
 //登録画面から来た場合
@@ -87,8 +89,9 @@ switch($mode){
         $res = $common->db->insert("user", $dataArr);
 
         if ($res === true){
+            $login->checkLogin();
             //登録成功時は完成ページへ
-            header('Location:' . Bootstrap::ENTRY_URL .  'controller/complete.php');
+            header('Location:' . Bootstrap::ENTRY_URL . 'controller/top.php');
             exit ();
         } else {
             //登録失敗時は登録画面に戻る

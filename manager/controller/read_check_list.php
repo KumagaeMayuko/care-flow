@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use manager\model\manager;
 use info\model\info;
 
@@ -15,11 +16,13 @@ $twig = new \Twig_Environment( $loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 
 $manager = new manager;
+$common = new Common;
 $info = new info;
 
 $userData = $manager->getUsersData();
 $infos = $manager->getInfosData();
-$context = [];
+$context = $common->getContext();
+
 // var_dump($userData);
 $readStatusUsers = $manager->getUserReadStatusData();
 $alreadyReadInfos = array_column($readStatusUsers, 'read_status_id', 'user_id');

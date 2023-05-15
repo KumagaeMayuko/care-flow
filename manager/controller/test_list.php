@@ -7,6 +7,7 @@ use common\model\Bootstrap;
 use common\model\PDODatabase;
 use common\model\Category;
 use common\model\Login;
+use common\model\Common;
 use manager\model\manager;
 
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
@@ -16,12 +17,13 @@ $twig = new \Twig_Environment( $loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ctg = new Category($db);
 $login = new Login;
+$common = new Common;
 $manager = new manager;
 
 // testのタイトルを一覧画面で表示するためにデータを取得
 $test = $manager->getTestData();
 
-$context = [];
+$context = $common->getContext();
 
 $context['tests'] = $test;
 

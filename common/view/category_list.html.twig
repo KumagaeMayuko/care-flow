@@ -1,5 +1,5 @@
 {% for value in tree %}
-    <input type="checkbox" name="ctg_name" value="{{value.ctg_name}}"id="{{value.ctg_name}}"
+    <input type="checkbox" name="ctg_id" value="{{value.id}}"
     {% if dataArr.ctg_name == value.ctg_name %} checked="checked" {% endif %}>
     {{value.ctg_name}}
     {% if value.children is defined %}

@@ -1,3 +1,7 @@
-<p>削除完了しました</p>
+{% extends 'user/view/base.html.twig' %}
 
-<a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">トップ画面へ戻る</a>
+{% block title %}削除完了{% endblock %}
+{% block content %}
+    <p>削除完了しました</p>
+    <a class="none-link" href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+{% endblock %}
