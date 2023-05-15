@@ -1,7 +1,5 @@
 <?php
 
-// 商品に関するプログラムのクラスファイル、Model
-
 namespace common\model;
 
 class Category
@@ -37,54 +35,39 @@ class Category
         }
     }
     return $branch;
+    }
+
+    public function recursiveGetChildCategories($parent_id)
+    {
+        $table = 'category';
+        $columns = 'id, ctg_name, parent_id';
+        $where = 'parent_id = ? AND delete_flg = ?';
+        $arrVal = [$parent_id, '0'];
+        $result = [];
+
+        // 子カテゴリーを取得
+        $children = $this->db->select($table, $columns, $where, $arrVal);
+
+        foreach ($children as $child) {
+            // 子カテゴリーを結果に追加
+            $result[] = $child;
+
+            // 再帰的に子カテゴリーの子カテゴリーを取得
+            $result = array_merge($result, $this->recursiveGetChildCategories($child['id']));
+        }
+
+        return $result;
+    }
+
+        // 親カテゴリーリストの取得
+    public function getCategorieById($id)
+    {
+        $table = 'category';
+        $col = 'id, ctg_name, parent_id';
+        $where = 'id = ? AND delete_flg = ?';
+        $arrVal = [$id, '0'];
+        $res = $this->db->select($table, $col, $where, $arrVal);
+        return $res;
+    }
 }
-    // // 商品リストを取得する
-    // public function getItemList($ctg_id)
-    // {
-    //     // カテゴリーによって表示させるアイテムをかえる
-    //     $table = ' item ';
-    //     $col = ' item_id, item_name, price, image, ctg_id';
-    //     $where = ($ctg_id !== '') ? '  ctg_id = ? ' : '';
-    //     $arrVal = ($ctg_id !== '') ? [$ctg_id] : [];
 
-    //     $res = $this->db->select($table, $col, $where, $arrVal);
-
-    //     return ($res !== false && count($res) !== 0) ? $res : false;
-    // }
-    // public function getSearchList($search)
-    // {
-    //     // カテゴリーによって表示させるアイテムをかえる
-    //     $query = "SELECT "
-    //             ." * "
-    //             . " FROM "
-    //             . "item "
-    //             . " WHERE "
-    //             . " item_name"
-    //             . " like "
-    //             . "'%"
-    //             . $search
-    //             . "%'";
-
-    //     $res = mysqli_query($this->db, $query);
-    //     $data = [];
-    //     while ($row = mysqli_fetch_assoc($res)) {
-    //         array_push($data, $row);
-    //     }
-    //     return ($data !== false && count($data) !== 0) ? $data : false;
-    // }
-
-    // // 商品の詳細情報を取得する
-    // public function getItemDetailData($item_id)
-    // {
-    //     $table = ' item';
-    //     $col = ' item_id, item_name, detail, price, image, ctg_id';
-
-    //     $where = ($item_id !== '') ? ' item_id = ?' : '';
-    //     //カテゴリーによって表示させるアイテムをかえる
-    //     $arrVal = ($item_id !== '') ? [$item_id] : [];
-
-    //     $res = $this->db->select($table, $col, $where, $arrVal);
-
-    //     return ($res !== false && count($res) !== 0) ? $res : false;
-    // }
-}

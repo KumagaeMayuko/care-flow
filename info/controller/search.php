@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use info\model\Info;
 use user\model\Category;
 
@@ -16,20 +17,21 @@ $twig = new \Twig_Environment( $loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $info = new Info;
 $ctg = new Category($db);
+$common = new Common();
 
 $search = [];
 $search = $_GET['search'];
 unset($_GET['send']);
 $res = $info->searchInfoData($search);
 
-$context = [];
+$context = $common->getContext();
 
 $data = [];
 $data = $res;
 $count = count($data);
 
         if ($count === 0){
-            echo "検索結果はありませんでした";
+            $message =  "検索結果はありませんでした";
 
             $cateArr = $ctg->getCategories();
 
@@ -38,17 +40,18 @@ $count = count($data);
             $context['cateArr'] = $cateArr;
 
             $context['tree'] = $tree;
+            $context['message'] = $message;
 
-            $template = 'user/view/staff_top.html.twig';
+            $template = 'user/view/top.html.twig';
 
         } else if ($count === 1){
             header('Location:' . Bootstrap::ENTRY_URL .  'info/controller/detail.php?info_id=' . $data[0]['id']  );
         } else if ($count >= 2){    
-            $context['infos'] = $data;
+            $context['infoAll'] = $data;
             $template = 'info/view/list.html.twig';
 
         }else if($res === false){
-            echo  'エラーが出ています'; 
+            $message =  'エラーが出ています'; 
 
             $cateArr = $ctg->getCategories();
             $tree = $ctg->buildTree($cateArr);
@@ -56,7 +59,8 @@ $count = count($data);
             $context['cateArr'] = $cateArr;
 
             $context['tree'] = $tree;
-            $template = 'user/view/staff_top.html.twig';
+            $context['message'] = $message;
+            $template = 'user/view/top.html.twig';
         }
 
 $template = $twig->loadTemplate($template);

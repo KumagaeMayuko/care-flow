@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use manager\model\manager;
 
 $loader = new \Twig_Loader_Filesystem( Bootstrap::TEMPLATE_DIR );
@@ -13,11 +14,12 @@ $twig = new \Twig_Environment( $loader, [
 ] );
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $manager = new manager;
+$common = new Common;
 
 $check_flg = '1';
 $checkPosts = $manager->getInfosDataByCheckFlg($check_flg);
 
-$context = [];
+$context = $common->getContext();
 $context['checkPosts'] = $checkPosts;
 
 $template = $twig->loadTemplate('manager/view/info_check_list.html.twig');

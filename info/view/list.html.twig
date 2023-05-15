@@ -3,11 +3,11 @@
 {% block title %}一覧画面{% endblock %}
 {% block content %}
     <h2 class='h2'>一覧画面</h2>
-    {% for info in infos %}
-        <p><a href="detail.php?info_id={{info.id}}">{{info.title}}</a></p>
-        <p>{{info.create_at}}</p>
+    {% for info in infoAll %}
+        <p><a class="none-link" href="detail.php?info_id={{info.id}}">タイトル：{{info.title}}</a></p>
+        <p>投稿日時：{{info.create_at}}</p>
     {% endfor %}
         <p>{{message}}</p>
-    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+    <a class="none-link" href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
 {% endblock %}
 

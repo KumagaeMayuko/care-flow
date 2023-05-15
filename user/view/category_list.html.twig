@@ -1,6 +1,6 @@
 {% for value in tree %}
 <ul>
-    <li><a href="../../info/controller/list.php?id={{value.id}}">{{value.ctg_name}}</a></li>
+    <li><a class="none-link" href="../../info/controller/list.php?id={{value.id}}">{{value.ctg_name}}</a></li>
     {% if value.children is defined %}
         {% include 'user/view/category_list.html.twig' with {'tree': value.children} %}
     {% endif %}

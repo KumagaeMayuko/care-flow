@@ -2,21 +2,98 @@
 
 {% block title %}TOPページ（管理者）{% endblock %}
 {% block content %}
+    <style type="text/css">
+        .ctg_input_zone {
+            display: none;
+        }
+        .main_ctg_input_zone {
+            display: block;
+        }
+        .ctg_input_zone input {
+            margin-left: 20px;
+            line-height: 26px;
+            margin-bottom: 10px;
+        }
+        .ctg_input_zone button {
+            width: 60px;
+            line-height: 28px;
+            border: 1px solid gray;
+        }
+        .main_ctg_input_zone input {
+            line-height: 26px;
+            margin-bottom: 50px;
+        }
+        .main_ctg_input_zone button {
+            width: 60px;
+            line-height: 28px;
+            border: 1px solid gray;
+        }
+        .category_create_btn {
+            border: none;
+            color: #6eaefc;
+            line-height: 30px;
+        }
+        .category_create_submit_btn {
+
+        }
+        .trash-form {
+            display: inline-block;
+        }
+        .trash-btn {
+            border: none;
+            color: #929292;
+            line-height: 30px;
+        }
+        .category-info-link {
+            text-decoration: none!important;
+        }
+        .category-list {
+            line-height: 48px;
+        }
+        .add-parent-btn {
+            background-color: #b2b2b2;
+            margin-bottom: 8px;
+            border: 1px solid #717171;
+            border-radius: 5px;
+            color: white;
+            padding: 4px 12px;
+        }
+        .plus-input {
+            display: none;
+            margin-left: 20px;
+            line-height: 26px;
+            margin-bottom: 10px;
+        }
+    </style>
+    {% if message is defined %}
+        {{ message }}<br><br>
+    {% endif %}
     <h2 class="h2">医療情報ノート</h2>
     <div id="info_share">
         <div id="category">
         {% include 'manager/view/category_list.html.twig' %}
         </div>
-        <button class='category_create_btn' type="button">＋(メインカテゴリーの追加)</button>
-        <span class="ctg">
+        <span class='main_ctg_input_zone'>
             <form id="form_0" action="../../manager/controller/top.php" method="post">
-                <input class='category_input' type='text' name='ctg_name'>
-                <button type='submit' for="form_0">送信</button>
+                <input class='category_input' type='text' name='ctg_name' placeholder='メインカテゴリーの追加'>
+                <button type='submit' for="form_0">作成</button>
             </form>
         </span>
         <div id="post">
-            <a href="../../info/controller/post.php"><input type="button" name="post" value="新規投稿" id="post" /></a>
+            <a href="../../info/controller/post.php"><input class="btn btn-primary" type="button" name="post" value="新規投稿" id="post" /></a>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            const categoryButtons = document.querySelectorAll('.category_create_btn');
+            categoryButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const ctg_input_zone = this.parentNode.querySelector('.ctg_input_zone');
+                    // const ctg_input_zone = this.nextElementSibling;
+                    ctg_input_zone.style.display = ctg_input_zone.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        };
+    </script>
     
 {% endblock %}

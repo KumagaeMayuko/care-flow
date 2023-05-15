@@ -10,16 +10,19 @@
         <p>作成者：{{value.name}}</p>
         <p>内容：{{value.content}}</p>
         {% if value.image is defined and value.image != ''%}
-            <p>画像：<img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}"/></p>
+            <p>画像：<img src="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" width="300"/></p>
         {% else %}
             <p>画像：なし</p>
         {% endif%}
-        <div id="edit">
-            <a href="../../info/controller/edit_detail.php?id={{value.id}}"><input type="button" name="edit" value="編集" id="edit" /></a>
-        </div>
-        <div id="delete">
-            <a href="../../info/controller/delete.php?id={{value.id}}"><input type="button" name="delete" value="削除" id="delete" /></a>
-        </div>
+        {% if value.user_id  == session_user_id%}
+            <div id="edit">
+                <a href="../../info/controller/edit_detail.php?id={{value.id}}"><input class="btn btn-primary" type="button" name="edit" value="編集" id="edit"/></a><br><br>
+            </div>
+            <div id="delete">
+                <a href="../../info/controller/delete.php?id={{value.id}}"><input class="btn btn-primary" type="button" name="delete" value="削除" id="delete" /></a>
+            </div>
+        {% endif %}
     {% endfor %}
-    <a href="../../user/controller/top.php">トップページへ戻る</a>
+    <a class="none-link" href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a><br>
+    <a class="none-link" href="../../user/controller/top.php">トップページへ戻る</a>
 {% endblock %}

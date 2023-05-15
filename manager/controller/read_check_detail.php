@@ -5,6 +5,7 @@ require_once dirname( __FILE__, 3) . '/common/model/Bootstrap.class.php';
 
 use common\model\Bootstrap;
 use common\model\PDODatabase;
+use common\model\Common;
 use manager\model\manager;
 use info\model\info;
 
@@ -15,6 +16,7 @@ $twig = new \Twig_Environment( $loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 
 $manager = new manager;
+$common = new Common;
 $info = new info;
 
 $user_id = $_GET['user_id'];
@@ -25,7 +27,7 @@ $unreadInfos = $manager->getUnReadInfos($user_id);
 // nameを取得
 $readStatusByUserId = $manager->getUserReadStatusDataByUserId($user_id);
 
-$context = [];
+$context = $common->getContext();
 $context['unreadInfos'] = $unreadInfos;
 
 $name = $readStatusByUserId[0]['name'];

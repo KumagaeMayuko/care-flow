@@ -77,10 +77,12 @@ class Common
 
     public function passCheck()
     {
-        if ($this->dataArr['pass'] === "") {
-            $this->errArr['pass'] = "パスワードを入力してください";
-        } elseif ($this->dataArr['pass_confirm'] === ""){
-            $this->errArr['pass_confirm'] = "パスワード（確認用）を入力してください";
+        // パスワードが8文字未満の場合、エラーメッセージを表示
+        if (strlen($this->dataArr['pass']) < 8) {
+        echo 'aaaa';
+            $this->errArr['pass'] = 'パスワードを8桁以上で入力してください' ;
+        } elseif (strlen($this->dataArr['pass_confirm']) < 8){
+            $this->errArr['pass_confirm'] = "パスワード（確認用）を8桁以上で入力してください";
         } else if ($this->dataArr['pass'] !== $this->dataArr['pass_confirm']) {
             $this->errArr['pass_confirm'] = "パスワードが異なります"; 
         } 

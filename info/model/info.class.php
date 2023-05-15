@@ -128,9 +128,9 @@ class Info {
     public function getInfoCategoryData($ctg_id)
     {
         $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
-        $column = ' i.id, i.title, i.create_at, i.check_flg, user_id';
-        $where = ' ic.ctg_id = ?'; 
-        $arrVal = [$ctg_id];
+        $column = ' i.id, i.title, i.create_at, i.check_flg, i.delete_flg, user_id';
+        $where = ' ic.ctg_id = ? AND i.delete_flg = ? AND i.check_flg = ?'; 
+        $arrVal = [$ctg_id, '0', '0'];
 
         return  $this->db->select($table, $column, $where, $arrVal);
     }
@@ -230,6 +230,16 @@ class Info {
             $res = $this->insertReadStatusData($info_id, $user_id);
         }
         return $res;
+    }
+
+    public function updateInfoCategoryData($info_id, $dataArr)
+    {
+        $table = 'info_category';
+        $insData = $dataArr;
+        $where = 'info_id = ?';
+        $arrWhereVal = [$info_id];
+
+        return $this->db->update($table, $where, $insData, $arrWhereVal);
     }
 
 }

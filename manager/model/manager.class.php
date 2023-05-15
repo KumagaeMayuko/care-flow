@@ -215,6 +215,23 @@ Class Manager {
 
         return $this->db->update($table, $where, $insData, $arrWhereVal);
     }
+    // categoryテーブルを更新(where = id)
+        public function updateCategoryDataById($id)
+    {
+        $table = 'category';
+        $now = time();
+        $update_at = date("Y/m/d H:i:s", $now);
+        $delete_at = date("Y/m/d H:i:s", $now);
+        $insData = [
+            'update_at' => $update_at,
+            'delete_at' => $delete_at,
+            'delete_flg' => 1
+        ];
+        $where = 'id = ?';
+        $arrWhereVal = [$id];
+
+        return $this->db->update($table, $where, $insData, $arrWhereVal);
+    }
 
         // testテーブルにタイトルを追加
     public function insertTestData($title){
