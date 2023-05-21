@@ -6,7 +6,7 @@
     <input type="hidden" name="entry_url" id="entry_url" value="{{constant('common\\model\\Bootstrap::ENTRY_URL')}}">
     <form method="post" action="post_confirm.php" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{csrf_token}}">
-        <table>
+        <table class="custom-table">
             <tr>
                 <th>タイトル</th>
                 <td>

@@ -2,12 +2,22 @@
 <html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        body {
+            style="margin: 0; 
+            padding: 0;
+        }
+        .sidebar-container {
+            height: calc(100vh - 56px); /* ナビゲーションバーの高さを考慮 */
+            overflow-y: auto; /* メニューが画面をはみ出した場合はスクロール可能にする */
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -23,7 +33,16 @@
             .sidebar {
                 top: 11.5rem;
                 padding: 0;
+                position: absolute;
+                height: 100%;
             }
+            .py-4 {
+                padding-top: 0!important;
+                padding-bottom: 0!important;
+            }
+            .sidebar-container {
+            height: calc(100vh - 11.5rem); /* ナビゲーションバーの高さを考慮 */
+        }
         }
 
         .navbar {
@@ -87,7 +106,7 @@
         </div>
     </nav>
     <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="position-sticky">
+        <div class="position-sticky sidebar-container" style="height: 100vh;"">
             {% include 'user/view/menu.html.twig' %}
         </div>
     </nav>
