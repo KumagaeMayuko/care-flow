@@ -128,8 +128,8 @@ class Info {
     public function getInfoCategoryData($ctg_id)
     {
         $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
-        $column = ' i.id, i.title, i.create_at, i.check_flg, i.delete_flg, user_id';
-        $where = ' ic.ctg_id = ? AND i.delete_flg = ? AND i.check_flg = ?'; 
+        $column = ' i.id, i.title, i.create_at, i.check_flg, i.delete_flg, user_id, c.ctg_name, ic.ctg_id';
+        $where = ' ic.ctg_id = ? AND i.delete_flg = ? AND i.check_flg = ? '; 
         $arrVal = [$ctg_id, '0', '0'];
 
         return  $this->db->select($table, $column, $where, $arrVal);
@@ -144,11 +144,11 @@ class Info {
         return  $this->db->select($table, $column, $where, $arrVal);
     }
 
-    public function getCategoryDataByInfoID($info_id)
+    public function getCategoryNameDataByInfoID($info_id)
     {
         $table = ' info i LEFT JOIN info_category ic ON i.id = ic.info_id LEFT JOIN category c ON ic.ctg_id = c.id';
-        $column = ' i.id, i.title, i.create_at, user_id';
-        $where = ' ic.ctg_id = ?'; 
+        $column = ' i.id, i.title, i.create_at, user_id,  c.ctg_name, ic.ctg_id';
+        $where = ' ic.info_id = ?'; 
         $arrVal = [$info_id];
 
         return  $this->db->select($table, $column, $where, $arrVal);
