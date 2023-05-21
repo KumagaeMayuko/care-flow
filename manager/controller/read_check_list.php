@@ -23,6 +23,12 @@ $userData = $manager->getUsersData();
 $infos = $manager->getInfosData();
 $context = $common->getContext();
 
+// ページネーション
+$res = $common->getPagenationData('user', 'delete_flg = 0');
+$data = $res['data'];
+$page_num = $res['page_num'];
+$page = $res['page'];
+
 // var_dump($userData);
 $readStatusUsers = $manager->getUserReadStatusData();
 $alreadyReadInfos = array_column($readStatusUsers, 'read_status_id', 'user_id');
@@ -50,8 +56,11 @@ foreach($readedByUser as &$value){
     $unreadInfos = array_diff($infoAll, $readed);
     $value['unreaded'] = $unreadInfos;
 }
-
+// var_dump($readedByUser);
 $context['readedByUser'] = $readedByUser;
+$context['users'] = $data;
+$context['page'] = $page;
+$context['page_num'] = $page_num;
 
 $template = $twig->loadTemplate('manager/view/read_check_list.html.twig');
 $template->display( $context );

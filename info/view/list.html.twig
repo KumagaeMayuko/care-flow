@@ -3,11 +3,23 @@
 {% block title %}一覧画面{% endblock %}
 {% block content %}
     <h2 class='h2'>一覧画面</h2>
-    {% for info in infoAll %}
-        <p><a class="none-link" href="detail.php?info_id={{info.id}}">タイトル：{{info.title}}</a></p>
-        <p>投稿日時：{{info.create_at}}</p>
+    {% for v in data %}
+        {%for value in v%}
+            <p>カテゴリー：{{value.ctg_name}}</p>
+            <p><a class="none-link" href="detail.php?info_id={{value.id}}">タイトル：{{value.title}}</a></p>
+            <p style='border-bottom:1px solid #6c757d;'>投稿日時：{{value.create_at}}</p><br><br>
+        {% endfor %}
     {% endfor %}
+
+    {% if message is not empty %}
         <p>{{message}}</p>
-    <a class="none-link" href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a>
+    {% else %}
+        {% for number in range(1, page_num, 1) %}
+            <a href="list.php?page={{number}}&id={{ctg_id}}" {% if page == number %}style="color: red;"{% endif %}>{{ number }}</a>
+        {% endfor %}
+        <br>
+    {% endif %}
+
+    <a href="{{constant('common\\model\\Bootstrap::TOP_URL')}}">戻る</a><br>
 {% endblock %}
 

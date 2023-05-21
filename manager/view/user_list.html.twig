@@ -6,7 +6,6 @@
     <div id="user_list">
         <form method="post" action="user_list.php" >
             {% for user in users%}
-                {% if user.delete_flg == '0'%}
                     <table style="border: 2px solid #aaa; padding: 2em;">
                         <tr>
                             <th>名前</th>
@@ -40,9 +39,12 @@
                         {% endif %}
                     </div>
                     <br><br>
-                {% endif %}
             {% endfor %}
         </form>
-        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a>
+        {% for number in range(1, page_num, 1) %}
+            <a href="user_list.php?page={{number}}" {% if page == number %}style="color: red;"{% endif %}>{{ number }}</a>
+        {% endfor %}
+        <br>
+        <a href="{{constant('common\\model\\Bootstrap::MANAGER_TOP_URL')}}">戻る</a><br>
     </div>
 {% endblock %}

@@ -26,6 +26,24 @@ Class Manager {
         $table = ' user';
         return  $this->db->select($table);
     }
+    // Userテーブルから全ての会員情報を取得
+    public function getUsersDataByLimiter()
+    {
+        $db = mysqli_connect(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
+
+        $query = " SELECT * FROM user "; 
+
+        $res = mysqli_query($db, $query);
+
+
+        $data = [];
+        while ($row = mysqli_fetch_assoc($res)) {
+            array_push($data, $row);
+        }
+        mysqli_close($db);
+        return $res;
+
+    }
 
     // infoテーブルから全ての情報を取得
     public function getInfosData()
